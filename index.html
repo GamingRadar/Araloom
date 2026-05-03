@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Araloom: Capture. Structure. Connect.</title>
+  <meta name="description"
+    content="Araloom is a Chrome extension that lets you capture data from any webpage, structure it into forms, add notes, and link ideas together.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      padding: 130px 24px 80px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 20%, transparent 100%);
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 15%;
+      left: 40%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse, rgba(99, 102, 241, 0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--indigo-dim);
+      border: 1px solid var(--indigo-border);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--indigo);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 22px;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--indigo);
+      animation: pulse 2s infinite;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--indigo);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-dim);
+      max-width: 480px;
+      margin: 20px 0 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 52px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .stat-sep {
+      width: 1px;
+      height: 30px;
+      background: var(--border);
+    }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* Extension mockup */
+    .ext-mockup {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(99, 102, 241, 0.07);
+    }
+
+    .ext-topbar {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(8, 8, 16, 0.5);
+    }
+
+    .ext-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .ext-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .ext-topbar-title {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .ext-body {
+      padding: 14px;
+    }
+
+    .ext-url {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 7px 11px;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ext-highlight {
+      background: rgba(99, 102, 241, 0.1);
+      border-left: 2px solid var(--indigo);
+      border-radius: 0 6px 6px 0;
+      padding: 9px 11px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    .ext-field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    .ext-field {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 10px;
+    }
+
+    .ext-field-label {
+      font-size: 9px;
+      color: var(--text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+
+    .ext-field-val {
+      font-size: 11px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .ext-tags-row {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .ext-chip {
+      background: var(--indigo-dim);
+      border: 1px solid var(--indigo-border);
+      border-radius: 100px;
+      padding: 2px 9px;
+      font-size: 10px;
+      color: var(--indigo);
+      font-weight: 600;
+    }
+
+    .ext-save-btn {
+      width: 100%;
+      background: var(--indigo);
+      border: none;
+      border-radius: 7px;
+      padding: 9px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      font-family: 'Syne', sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── FEATURES STRIP ── */
+    #features {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .feature-item {
+      background: var(--bg);
+      padding: 32px 28px;
+      transition: background 0.25s;
+    }
+
+    .feature-item:hover {
+      background: var(--surface2);
+    }
+
+    .feature-icon {
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+
+    .feature-item p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    /* ── USE CASES ── */
+    #usecases {
+      background: var(--bg);
+    }
+
+    .usecase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .usecase-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .usecase-card:hover {
+      border-color: var(--indigo-border);
+      transform: translateY(-3px);
+    }
+
+    .usecase-emoji {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .usecase-card p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    /* ── CTA ── */
+    #cta {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 80px 24px;
+    }
+
+    #cta h2 {
+      margin-bottom: 14px;
+    }
+
+    #cta p {
+      color: var(--text-dim);
+      max-width: 440px;
+      margin: 0 auto 32px;
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .ext-mockup {
+        display: none;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .usecase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark"><span></span><span></span><span></span><span></span></div>
+        Araloom
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="gallery.html">Templates</a></li>
+        <li><a href="submit.html">Submit</a></li>
+      </ul>
+      <a href="#" class="btn-primary">Get Extension ↓</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge fade-up d1">
+          <span class="dot"></span> Chrome Extension · Free
+        </div>
+        <h1 class="fade-up d2">Capture <em>knowledge</em><br>from any webpage</h1>
+        <p class="hero-sub fade-up d3">
+          Select text, clip data, add notes, link ideas. Araloom structures your browsing into organized Looms, right
+          inside Chrome.
+        </p>
+        <div class="hero-actions fade-up d4">
+          <a href="#" class="btn-primary" style="font-size:15px; padding:12px 26px;">↓ Add to Chrome - Free</a>
+          <a href="gallery.html" class="btn-ghost" style="font-size:15px; padding:12px 26px;">Browse Templates →</a>
+        </div>
+        <div class="hero-stats fade-up d5">
+          <div>
+            <div class="stat-num">500+</div>
+            <div class="stat-label">Templates</div>
+          </div>
+          <div class="stat-sep"></div>
+          <div>
+            <div class="stat-num">5k+</div>
+            <div class="stat-label">Users</div>
+          </div>
+          <div class="stat-sep"></div>
+          <div>
+            <div class="stat-num">4.9 ★</div>
+            <div class="stat-label">Chrome Rating</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mockup: Research Papers template -->
+      <div class="ext-mockup fade-up d3">
+        <div class="ext-topbar">
+          <div class="ext-dots">
+            <span style="background:#e85d3a;"></span>
+            <span style="background:#f0e6d315;"></span>
+            <span style="background:#f0e6d315;"></span>
+          </div>
+          <span class="ext-topbar-title">📚 Research Papers</span>
+        </div>
+        <div class="ext-body">
+          <div class="ext-url">🔒 arxiv.org/abs/2310.06825</div>
+          <div class="ext-highlight">"Mistral 7B outperforms Llama 2 13B on all benchmarks and approaches CodeLlama on
+            code tasks…"</div>
+          <div class="ext-field-row">
+            <div class="ext-field">
+              <div class="ext-field-label">Title (auto)</div>
+              <div class="ext-field-val">Mistral 7B</div>
+            </div>
+            <div class="ext-field">
+              <div class="ext-field-label">Year</div>
+              <div class="ext-field-val">2023</div>
+            </div>
+            <div class="ext-field">
+              <div class="ext-field-label">Journal</div>
+              <div class="ext-field-val">arXiv</div>
+            </div>
+            <div class="ext-field">
+              <div class="ext-field-label">Author</div>
+              <div class="ext-field-val">Jiang et al.</div>
+            </div>
+          </div>
+          <div class="ext-field" style="margin-bottom:12px;">
+            <div class="ext-field-label">Notes</div>
+            <div class="ext-field-val" style="color:var(--text-dim);">Compare with @GPT4-Paper and @LLaMA2</div>
+          </div>
+          <div class="ext-tags-row">
+            <span class="ext-chip">ai</span>
+            <span class="ext-chip">nlp</span>
+            <span class="ext-chip">llm</span>
+          </div>
+          <button class="ext-save-btn">Save to Loom ↗</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-label">What it does</div>
+        <h2>Everything you need to capture knowledge</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">⚡</div>
+          <h3>One-click Capture</h3>
+          <p>Highlight any text or right-click any element. Araloom grabs it with source URL in under a second , no
+            copy-paste chaos.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📋</div>
+          <h3>Structured Forms</h3>
+          <p>Templates turn raw clips into organized fields, like a smart sheet, but built around how you actually
+            browse.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔗</div>
+          <h3>@mention Linking</h3>
+          <p>Connect related entries. Link a job application to your resume, or a paper to your notes. Context stays
+            attached.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📝</div>
+          <h3>Notes + Highlights</h3>
+          <p>Add personal notes to any capture. Highlight key passages. Your context stays with the source forever.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎨</div>
+          <h3>Community Templates</h3>
+          <p>Download JSON templates made by others. Import instantly. No setup, just pick, download, start capturing.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📤</div>
+          <h3>Your Data, Always</h3>
+          <p>Export Looms as JSON or CSV. Import templates in one click. No lock-in, no subscriptions, no accounts
+            required.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="usecases">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Who uses it</div>
+        <h2>Works for almost<br>every kind of research</h2>
+        <p class="section-sub">If you use Chrome and visit websites, Araloom has a use case for you.</p>
+      </div>
+      <div class="usecase-grid">
+        <div class="usecase-card">
+          <div class="usecase-emoji">🎓</div>
+          <h3>Students & Researchers</h3>
+          <p>Capture papers, store BibTeX citations, write notes, and link references, all from inside your browser as
+            you read.</p>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-emoji">💼</div>
+          <h3>Job Seekers</h3>
+          <p>Clip job listings from LinkedIn or Indeed. Track company, salary, deadline, status, and notes in one
+            organized view.</p>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-emoji">🎨</div>
+          <h3>Designers</h3>
+          <p>Collect UI inspiration, color palettes, and typography references. Link visual examples to design
+            decisions.</p>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-emoji">📈</div>
+          <h3>Investors & Analysts</h3>
+          <p>Track companies, funding rounds, and market signals from Crunchbase, TechCrunch, or any source
+            structured, not dumped into Notion.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="section-label">Get started</div>
+      <h2>Start for free, today</h2>
+      <p>No account needed. Install the extension, pick a template, and start capturing in under two minutes.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary" style="font-size:15px; padding:13px 28px;">↓ Add to Chrome - Free</a>
+        <a href="gallery.html" class="btn-ghost" style="font-size:15px; padding:13px 28px;">Explore Templates →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="logo-mark" style="width:22px;height:22px;gap:2px;">
+          <span style="border-radius:2px;"></span><span style="border-radius:2px;"></span>
+          <span style="border-radius:2px;"></span><span style="border-radius:2px;"></span>
+        </div>
+        Araloom
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="gallery.html">Templates</a>
+        <a href="submit.html">Submit</a>
+        <a href="https://github.com/YOUR_USERNAME/araloom" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="footer-copy">© 2026 Araloom</div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

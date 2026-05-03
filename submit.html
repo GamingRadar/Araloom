@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit a Template : Araloom</title>
+  <meta name="description" content="Share your Araloom template with the community. Submit via GitHub or email.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .page-hero {
+      padding: 120px 24px 64px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .page-hero-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 4.5vw, 52px);
+      margin-bottom: 10px;
+    }
+
+    .page-hero p {
+      font-size: 17px;
+      color: var(--text-dim);
+      max-width: 500px;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    #submit-section {
+      background: var(--bg);
+    }
+
+    .submit-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ── HOW-TO STEPS ── */
+    .steps-block {
+      margin-bottom: 40px;
+    }
+
+    .steps-block h2 {
+      font-size: 26px;
+      margin-bottom: 24px;
+    }
+
+    .how-step {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+
+    .how-step-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--indigo);
+      background: var(--indigo-dim);
+      border: 1px solid var(--indigo-border);
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .how-step-text h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    .how-step-text p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .how-step-text code {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-size: 12px;
+      color: var(--indigo);
+      font-family: monospace;
+    }
+
+    /* JSON schema preview */
+    .schema-preview {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 40px;
+    }
+
+    .schema-preview h3 {
+      font-size: 15px;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+
+    pre {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+      font-family: monospace;
+    }
+
+    pre .key {
+      color: var(--indigo);
+    }
+
+    pre .str {
+      color: #86efac;
+    }
+
+    pre .bool {
+      color: var(--orange);
+    }
+
+    pre .comment {
+      color: var(--text-faint);
+    }
+
+    /* Guidelines */
+    .guidelines {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .guidelines h3 {
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    .guideline-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .guideline-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .guideline-icon {
+      font-size: 14px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .guideline-item p {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.55;
+    }
+
+    /* ── SUBMIT SIDEBAR ── */
+    .submit-sidebar {
+      position: sticky;
+      top: 80px;
+    }
+
+    .option-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 26px;
+      margin-bottom: 14px;
+    }
+
+    .option-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .option-icon {
+      font-size: 22px;
+    }
+
+    .option-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .option-badge {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--indigo-dim);
+      color: var(--indigo);
+      border: 1px solid var(--indigo-border);
+    }
+
+    .option-desc {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    /* Formspree form */
+    .form-field {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 13px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--indigo-border);
+    }
+
+    .form-select {
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--indigo);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Syne', sans-serif;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    .form-submit:hover {
+      opacity: 0.86;
+    }
+
+    .form-note {
+      font-size: 11px;
+      color: var(--text-faint);
+      margin-top: 10px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .divider span {
+      font-size: 12px;
+      color: var(--text-faint);
+      white-space: nowrap;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .github-btn {
+      width: 100%;
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .github-btn:hover {
+      border-color: var(--indigo-border);
+    }
+
+    /* Success state */
+    .success-msg {
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+      font-size: 14px;
+      color: #34d399;
+      display: none;
+      margin-top: 14px;
+    }
+
+    .success-msg.show {
+      display: block;
+    }
+
+    @media (max-width: 860px) {
+      .submit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .submit-sidebar {
+        position: static;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark"><span></span><span></span><span></span><span></span></div>
+        Araloom
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="gallery.html">Templates</a></li>
+        <li><a href="submit.html" class="active">Submit</a></li>
+      </ul>
+      <a href="#" class="btn-primary">Get Extension ↓</a>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="section-label">Community</div>
+      <h1>Share your template</h1>
+      <p>Built a useful template in Araloom? Share it and let others download it in one click.</p>
+    </div>
+  </div>
+
+  <section id="submit-section">
+    <div class="container">
+      <div class="submit-grid">
+
+        <!-- LEFT: How it works + Schema -->
+        <div>
+          <div class="steps-block">
+            <h2>How submission works</h2>
+            <div class="how-step">
+              <div class="how-step-num">1</div>
+              <div class="how-step-text">
+                <h4>Build your template in Araloom</h4>
+                <p>Create a template inside the extension with the fields you need — text, tags, select, dates, etc.</p>
+              </div>
+            </div>
+            <div class="how-step">
+              <div class="how-step-num">2</div>
+              <div class="how-step-text">
+                <h4>Export it as a .json file</h4>
+                <p>In Araloom, go to your template → <code>Export</code>. You'll get a JSON file matching the schema
+                  below.</p>
+              </div>
+            </div>
+            <div class="how-step">
+              <div class="how-step-num">3</div>
+              <div class="how-step-text">
+                <h4>Submit via the form or GitHub</h4>
+                <p>Use the form on the right to email it to us, or open a GitHub Issue if you prefer. We review and
+                  publish it — usually within 48 hours.</p>
+              </div>
+            </div>
+            <div class="how-step">
+              <div class="how-step-num">4</div>
+              <div class="how-step-text">
+                <h4>It appears in the gallery</h4>
+                <p>Once live, anyone can download your template directly from <a href="gallery.html"
+                    style="color:var(--indigo);">the gallery</a>. Your name appears as author.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="schema-preview">
+            <h3>Expected JSON format</h3>
+            <pre><span class="comment">// Your exported template will look like this:</span>
+{
+  <span class="key">"id"</span>: <span class="str">"tab_xxxxxxxx_xxxxxxx"</span>,
+  <span class="key">"name"</span>: <span class="str">"Your Template Name"</span>,
+  <span class="key">"description"</span>: <span class="str">"What it captures and who it's for"</span>,
+  <span class="key">"icon"</span>: <span class="str">"📚"</span>,
+  <span class="key">"color"</span>: <span class="str">"#6366f1"</span>,
+  <span class="key">"fieldSchema"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="str">"tab_xxxxxxxx_xxxxxxx"</span>,
+      <span class="key">"label"</span>: <span class="str">"Title"</span>,
+      <span class="key">"type"</span>: <span class="str">"auto_title"</span>,
+      <span class="key">"required"</span>: <span class="bool">true</span>
+    },
+    {
+      <span class="key">"id"</span>: <span class="str">"tab_xxxxxxxx_xxxxxxx"</span>,
+      <span class="key">"label"</span>: <span class="str">"Notes"</span>,
+      <span class="key">"type"</span>: <span class="str">"textarea"</span>,
+      <span class="key">"placeholder"</span>: <span class="str">"Your notes here..."</span>,
+      <span class="key">"required"</span>: <span class="bool">false</span>
+    }
+  ],
+  <span class="key">"createdAt"</span>: <span class="str">"2026-01-01T00:00:00.000Z"</span>,
+  <span class="key">"updatedAt"</span>: <span class="str">"2026-01-01T00:00:00.000Z"</span>
+}</pre>
+          </div>
+
+          <div class="guidelines">
+            <h3>Submission guidelines</h3>
+            <div class="guideline-list">
+              <div class="guideline-item">
+                <span class="guideline-icon">✅</span>
+                <p>Template should have a clear, specific purpose — not just "general notes"</p>
+              </div>
+              <div class="guideline-item">
+                <span class="guideline-icon">✅</span>
+                <p>Include at least one <code>auto_url</code> field so source is always saved</p>
+              </div>
+              <div class="guideline-item">
+                <span class="guideline-icon">✅</span>
+                <p>Write a description that explains what it captures and who it's for</p>
+              </div>
+              <div class="guideline-item">
+                <span class="guideline-icon">❌</span>
+                <p>No duplicates — check the gallery before submitting a similar template</p>
+              </div>
+              <div class="guideline-item">
+                <span class="guideline-icon">❌</span>
+                <p>No personal or sensitive data embedded in the JSON</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Submit sidebar -->
+        <div class="submit-sidebar">
+
+          <!-- Option 1: FormSubmit — no account, just your email in the action URL -->
+          <div class="option-card">
+            <div class="option-card-header">
+              <span class="option-icon">📨</span>
+              <span class="option-label">Submit via Form</span>
+              <span class="option-badge">Easiest</span>
+            </div>
+            <p class="option-desc">Fill in your details and paste your template JSON. We'll review and get it live
+              within 48 hours.</p>
+
+            <!--
+            SETUP: Replace your@email.com in the action URL with your real email.
+            First submission triggers a one-time confirmation email from FormSubmit.
+            That's it — no account, no dashboard, no API key needed.
+          -->
+            <form id="submit-form" action="https://formsubmit.co/your@email.com" method="POST">
+
+              <!-- FormSubmit config (hidden fields) -->
+              <input type="hidden" name="_subject" value="New Araloom Template Submission">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="hidden" name="_next" value=""><!-- leave blank: we handle success in JS -->
+              <input type="hidden" name="_template" value="table">
+              <!-- Honeypot anti-spam -->
+              <input type="text" name="_honey" style="display:none">
+
+              <div class="form-field">
+                <label class="form-label" for="author-name">Your Name / Handle</label>
+                <input class="form-input" type="text" id="author-name" name="name" placeholder="e.g. @yourname"
+                  required>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="author-email">Your Email</label>
+                <input class="form-input" type="email" id="author-email" name="email"
+                  placeholder="so we can notify you when it's live" required>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="template-category">Category</label>
+                <select class="form-select" id="template-category" name="category" required>
+                  <option value="" disabled selected>Select a category…</option>
+                  <option value="research">Research</option>
+                  <option value="jobs">Jobs</option>
+                  <option value="design">Design</option>
+                  <option value="learning">Learning</option>
+                  <option value="business">Business</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="template-json">
+                  Paste your template JSON
+                  <span id="json-status" style="margin-left:8px; font-size:10px; font-weight:700;"></span>
+                </label>
+                <textarea class="form-textarea" id="template-json" name="template_json" rows="8"
+                  placeholder='{ "id": "...", "name": "...", "fieldSchema": [...] }' required></textarea>
+              </div>
+
+              <button type="submit" class="form-submit" id="submit-btn">
+                Send Submission →
+              </button>
+              <p class="form-note">We review all submissions and reply within 48 hours. Your name will appear as the
+                template author in the gallery.</p>
+            </form>
+            <div class="success-msg" id="success-msg">
+              ✅ Submitted! We'll review and get back to you soon.
+            </div>
+          </div>
+
+          <div class="divider"><span>or</span></div>
+
+          <!-- Option 2: GitHub Issue -->
+          <div class="option-card">
+            <div class="option-card-header">
+              <span class="option-icon">🐙</span>
+              <span class="option-label">Open a GitHub Issue</span>
+            </div>
+            <p class="option-desc">Prefer GitHub? Open an issue with your JSON attached. Great if you want to discuss or
+              iterate on the template.</p>
+            <a href="https://github.com/YOUR_USERNAME/araloom/issues/new?template=submit_template.yml&title=[Template]+Your+Name+Here"
+              class="github-btn" target="_blank" rel="noopener">
+              🐙 Open Issue on GitHub →
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="logo-mark" style="width:22px;height:22px;gap:2px;">
+          <span style="border-radius:2px;"></span><span style="border-radius:2px;"></span>
+          <span style="border-radius:2px;"></span><span style="border-radius:2px;"></span>
+        </div>
+        Araloom
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="gallery.html">Templates</a>
+        <a href="submit.html">Submit</a>
+        <a href="https://github.com/YOUR_USERNAME/araloom" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="footer-copy">© 2026 Araloom</div>
+    </div>
+  </footer>
+
+  <script>
+    // Formspree AJAX submission (no page reload)
+    const form = document.getElementById('submit-form');
+    const successMsg = document.getElementById('success-msg');
+
+    // Live JSON validation as user types
+    const jsonField = document.getElementById('template-json');
+    const jsonStatus = document.getElementById('json-status');
+
+    jsonField.addEventListener('input', () => {
+      const val = jsonField.value.trim();
+      if (!val) { jsonStatus.textContent = ''; jsonField.style.borderColor = ''; return; }
+      try {
+        const parsed = JSON.parse(val);
+        const fieldCount = parsed.fieldSchema?.length ?? '?';
+        jsonStatus.textContent = `✓ Valid JSON · ${fieldCount} fields`;
+        jsonStatus.style.color = '#34d399';
+        jsonField.style.borderColor = 'rgba(52,211,153,0.4)';
+      } catch {
+        jsonStatus.textContent = '✗ Invalid JSON';
+        jsonStatus.style.color = 'var(--orange)';
+        jsonField.style.borderColor = 'var(--orange-border)';
+      }
+    });
+
+    // FormSubmit: standard POST — no JS fetch needed, but we intercept
+    // to show inline success instead of redirecting to FormSubmit's thank-you page
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      // Block if JSON is invalid
+      try { JSON.parse(jsonField.value); }
+      catch {
+        jsonField.focus();
+        jsonStatus.textContent = '✗ Fix JSON before submitting';
+        jsonStatus.style.color = 'var(--orange)';
+        return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        // FormSubmit accepts fetch with FormData — responds with JSON {success:"true"}
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.success !== 'false') {
+          form.style.display = 'none';
+          successMsg.classList.add('show');
+        } else {
+          btn.textContent = 'Something went wrong — try again';
+          btn.disabled = false;
+        }
+      } catch {
+        // Network error fallback
+        btn.textContent = 'Network error — try GitHub →';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+
+</html>

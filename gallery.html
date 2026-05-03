@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Template Gallery : Araloom</title>
+  <meta name="description"
+    content="Browse and download Araloom templates. Import JSON templates into the extension instantly.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .page-hero {
+      padding: 120px 24px 56px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .page-hero-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(32px, 4.5vw, 52px);
+      margin-bottom: 10px;
+    }
+
+    .page-hero p {
+      font-size: 16px;
+      color: var(--text-dim);
+      max-width: 440px;
+    }
+
+    .submit-link {
+      color: var(--indigo);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+      padding-bottom: 4px;
+    }
+
+    .submit-link:hover {
+      opacity: 0.7;
+    }
+
+    /* Gallery layout */
+    #gallery-section {
+      background: var(--bg);
+      padding: 48px 24px 80px;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .filter-btn:hover {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .filter-btn.active {
+      background: var(--indigo);
+      border-color: var(--indigo);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .template-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.22s;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+    }
+
+    .template-card:hover {
+      border-color: var(--indigo-border);
+      transform: translateY(-4px);
+    }
+
+    .card-thumb {
+      height: 48px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-icon {
+      font-size: 18px;
+    }
+
+    .card-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .card-badge {
+      margin-left: auto;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 100px;
+      background: var(--orange-dim);
+      color: var(--orange);
+      border: 1px solid var(--orange-border);
+    }
+
+    .card-badge.official {
+      background: var(--indigo-dim);
+      color: var(--indigo);
+      border-color: var(--indigo-border);
+    }
+
+    .card-fields {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+    }
+
+    .card-field {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-field-label {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .card-field-label .req {
+      color: var(--orange);
+      margin-left: 2px;
+      font-size: 10px;
+    }
+
+    .field-type-pill {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .pill-auto {
+      background: var(--orange-dim);
+      color: var(--orange);
+    }
+
+    .pill-text {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--indigo);
+    }
+
+    .pill-textarea {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--indigo);
+    }
+
+    .pill-tags {
+      background: rgba(52, 211, 153, 0.1);
+      color: #34d399;
+    }
+
+    .pill-select {
+      background: rgba(251, 191, 36, 0.1);
+      color: #fbbf24;
+    }
+
+    .pill-bibtex {
+      background: rgba(232, 93, 58, 0.1);
+      color: var(--orange);
+    }
+
+    .pill-date {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--indigo);
+    }
+
+    .pill-number {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--indigo);
+    }
+
+    .pill-url {
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--indigo);
+    }
+
+    .pill-default {
+      background: var(--surface);
+      color: var(--text-dim);
+    }
+
+    .card-footer {
+      padding: 10px 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-author {
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-dl {
+      background: var(--indigo);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 13px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .btn-dl:hover {
+      opacity: 0.82;
+    }
+
+    .btn-prev {
+      background: var(--surface2);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .btn-prev:hover {
+      border-color: var(--indigo-border);
+      color: var(--text);
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-faint);
+      font-size: 15px;
+    }
+
+    /* ── MODAL ── */
+    .modal {
+      max-width: 560px;
+    }
+
+    .modal-meta-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .modal-meta-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .modal-meta-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      margin-bottom: 4px;
+    }
+
+    .modal-meta-val {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .modal-fields-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-faint);
+      margin-bottom: 10px;
+    }
+
+    .modal-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .modal-field {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-field-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .modal-field-name {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .modal-field-hint {
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    .modal-field-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .req-dot {
+      font-size: 10px;
+      color: var(--orange);
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: var(--orange-dim);
+      border: 1px solid var(--orange-border);
+    }
+
+    .modal-download-btn {
+      width: 100%;
+      background: var(--indigo);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      font-family: 'Syne', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .modal-download-btn:hover {
+      opacity: 0.86;
+    }
+
+    @media (max-width: 860px) {
+      .template-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .template-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-hero-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark"><span></span><span></span><span></span><span></span></div>
+        Araloom
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="gallery.html" class="active">Templates</a></li>
+        <li><a href="submit.html">Submit</a></li>
+      </ul>
+      <a href="#" class="btn-primary">Get Extension ↓</a>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div>
+        <div class="section-label">Template Gallery</div>
+        <h1>Browse & Download Templates</h1>
+        <p>Each template is a JSON file. Download it, import into Araloom, and start capturing instantly.</p>
+      </div>
+      <a href="submit.html" class="submit-link">+ Submit your template →</a>
+    </div>
+  </div>
+
+  <section id="gallery-section">
+    <div class="container">
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-btn active" data-tag="all">All</button>
+        <button class="filter-btn" data-tag="research">Research</button>
+        <button class="filter-btn" data-tag="jobs">Jobs</button>
+        <button class="filter-btn" data-tag="design">Design</button>
+        <button class="filter-btn" data-tag="learning">Learning</button>
+        <button class="filter-btn" data-tag="business">Business</button>
+        <button class="filter-btn" data-tag="community">Community</button>
+      </div>
+      <div class="template-grid" id="template-grid"></div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 id="modal-title"></h3>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-desc" style="color:var(--text-dim); font-size:15px; margin-bottom:18px;"></p>
+        <div class="modal-meta-row">
+          <div class="modal-meta-item">
+            <div class="modal-meta-label">Author</div>
+            <div class="modal-meta-val" id="modal-author"></div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-label">Category</div>
+            <div class="modal-meta-val" id="modal-category"></div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-label">Fields</div>
+            <div class="modal-meta-val" id="modal-field-count"></div>
+          </div>
+        </div>
+        <div class="modal-fields-title">Template Fields</div>
+        <div class="modal-fields" id="modal-fields"></div>
+        <button class="modal-download-btn" id="modal-dl-btn">↓ Download Template (.json)</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="logo-mark" style="width:22px;height:22px;gap:2px;">
+          <span style="border-radius:2px;"></span><span style="border-radius:2px;"></span>
+          <span style="border-radius:2px;"></span><span style="border-radius:2px;"></span>
+        </div>
+        Araloom
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="gallery.html">Templates</a>
+        <a href="submit.html">Submit</a>
+        <a href="https://github.com/YOUR_USERNAME/araloom" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="footer-copy">© 2026 Araloom</div>
+    </div>
+  </footer>
+
+  <script>
+    // ─────────────────────────────────────────────────────────────
+    // TEMPLATE REGISTRY
+    // In production: replace this array with a fetch() from your
+    // GitHub raw URL, e.g.:
+    //   const res = await fetch('https://raw.githubusercontent.com/YOUR_USERNAME/araloom/main/templates/registry.json');
+    //   const { templates } = await res.json();
+    //
+    // Each template object mirrors your actual JSON format.
+    // ─────────────────────────────────────────────────────────────
+    const templates = [
+      {
+        id: "tab_mnksbnl6_f169c7r",
+        name: "Research Papers",
+        description: "Simplified capture for academic research title, URL, BibTeX citation, notes, and tags.",
+        author: "Araloom Team",
+        authorType: "official",
+        category: "research",
+        icon: "📚",
+        color: "#6366f1",
+        file: "research-papers.json",
+        fieldSchema: [
+          { id: "f1", label: "Title", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          { id: "f3", label: "BibTeX", type: "bibtex", required: false, subFields: ["author", "year", "journal", "doi", "title"] },
+          { id: "f4", label: "Notes", type: "textarea", required: false, placeholder: "Brief summary or takeaway..." },
+          { id: "f5", label: "Tags", type: "tags", required: false, placeholder: "ai, nlp, math..." }
+        ]
+      },
+      {
+        id: "tpl_jobs_001",
+        name: "Job Tracker",
+        description: "Track applications from LinkedIn, Indeed, or any job board. Status, salary, deadline in one view.",
+        author: "Araloom Team",
+        authorType: "official",
+        category: "jobs",
+        icon: "💼",
+        color: "#6366f1",
+        file: "job-tracker.json",
+        fieldSchema: [
+          { id: "f1", label: "Job Title", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          { id: "f3", label: "Company", type: "text", required: true },
+          { id: "f4", label: "Salary", type: "text", required: false },
+          {
+            id: "f5", label: "Status", type: "select", required: false,
+            options: ["Saved", "Applied", "Interviewing", "Offer", "Rejected"]
+          },
+          { id: "f6", label: "Deadline", type: "date", required: false },
+          { id: "f7", label: "Notes", type: "textarea", required: false, placeholder: "Impressions, contacts, next steps..." },
+          { id: "f8", label: "Tags", type: "tags", required: false }
+        ]
+      },
+      {
+        id: "tpl_design_001",
+        name: "Design Inspiration",
+        description: "Collect UI references, color palettes, and typography from any website. Build your visual moodboard.",
+        author: "Araloom Team",
+        authorType: "official",
+        category: "design",
+        icon: "🎨",
+        color: "#e85d3a",
+        file: "design-inspiration.json",
+        fieldSchema: [
+          { id: "f1", label: "Page Title", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          { id: "f3", label: "What I Like", type: "textarea", required: false, placeholder: "Layout, colors, type choices..." },
+          {
+            id: "f4", label: "Style Type", type: "select", required: false,
+            options: ["Minimal", "Brutalist", "Glassmorphism", "Gradient", "Dark", "Light", "Editorial"]
+          },
+          { id: "f5", label: "Tags", type: "tags", required: false, placeholder: "typography, dark-mode, cards..." }
+        ]
+      },
+      {
+        id: "tpl_learning_001",
+        name: "Learning Path",
+        description: "Structure online courses and tutorials. Track what you've learned and what to do next.",
+        author: "Araloom Team",
+        authorType: "official",
+        category: "learning",
+        icon: "🎓",
+        color: "#6366f1",
+        file: "learning-path.json",
+        fieldSchema: [
+          { id: "f1", label: "Resource Title", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          { id: "f3", label: "Platform", type: "text", required: false },
+          {
+            id: "f4", label: "Status", type: "select", required: false,
+            options: ["Not Started", "In Progress", "Completed", "Revisit"]
+          },
+          { id: "f5", label: "Key Takeaways", type: "textarea", required: false },
+          { id: "f6", label: "Tags", type: "tags", required: false, placeholder: "python, ml, beginner..." }
+        ]
+      },
+      {
+        id: "tpl_biz_001",
+        name: "Deal Flow Tracker",
+        description: "Track startups, funding rounds, and investment signals from Crunchbase, TechCrunch, and more.",
+        author: "VC Network",
+        authorType: "community",
+        category: "business",
+        icon: "📈",
+        color: "#e85d3a",
+        file: "deal-flow.json",
+        fieldSchema: [
+          { id: "f1", label: "Company", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          {
+            id: "f3", label: "Stage", type: "select", required: false,
+            options: ["Pre-seed", "Seed", "Series A", "Series B", "Growth", "Public"]
+          },
+          { id: "f4", label: "Valuation", type: "text", required: false },
+          {
+            id: "f5", label: "Thesis Fit", type: "select", required: false,
+            options: ["Strong", "Moderate", "Weak", "Pass"]
+          },
+          { id: "f6", label: "Notes", type: "textarea", required: false },
+          { id: "f7", label: "Tags", type: "tags", required: false, placeholder: "ai, fintech, b2b..." }
+        ]
+      },
+      {
+        id: "tpl_books_001",
+        name: "Book & Article Notes",
+        description: "Capture quotes, key ideas, and action items from anything you read online.",
+        author: "Reader's Circle",
+        authorType: "community",
+        category: "learning",
+        icon: "📖",
+        color: "#6366f1",
+        file: "book-notes.json",
+        fieldSchema: [
+          { id: "f1", label: "Title", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          { id: "f3", label: "Author", type: "text", required: false },
+          { id: "f4", label: "Key Quote", type: "textarea", required: false, placeholder: "The most important line..." },
+          { id: "f5", label: "My Takeaway", type: "textarea", required: false },
+          { id: "f6", label: "Tags", type: "tags", required: false }
+        ]
+      },
+      {
+        id: "tpl_ux_001",
+        name: "UX Research Notes",
+        description: "Collect competitor flows, user feedback patterns, and usability observations from any website.",
+        author: "Design Collective",
+        authorType: "community",
+        category: "design",
+        icon: "🔬",
+        color: "#e85d3a",
+        file: "ux-research.json",
+        fieldSchema: [
+          { id: "f1", label: "Page", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          { id: "f3", label: "Observation", type: "textarea", required: false, placeholder: "What did you notice?" },
+          {
+            id: "f4", label: "Sentiment", type: "select", required: false,
+            options: ["Positive", "Neutral", "Negative", "Mixed"]
+          },
+          { id: "f5", label: "Project Link", type: "text", required: false, placeholder: "@ProjectName" },
+          { id: "f6", label: "Tags", type: "tags", required: false, placeholder: "onboarding, nav, cta..." }
+        ]
+      },
+      {
+        id: "tpl_startup_001",
+        name: "Startup Research",
+        description: "Track competitors, product launches, and market positioning from any source across the web.",
+        author: "Founder Community",
+        authorType: "community",
+        category: "research",
+        icon: "🚀",
+        color: "#e85d3a",
+        file: "startup-research.json",
+        fieldSchema: [
+          { id: "f1", label: "Company/Product", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          { id: "f3", label: "Category", type: "text", required: false },
+          { id: "f4", label: "Key Points", type: "textarea", required: false },
+          {
+            id: "f5", label: "Threat Level", type: "select", required: false,
+            options: ["Low", "Medium", "High", "Watch"]
+          },
+          { id: "f6", label: "Tags", type: "tags", required: false }
+        ]
+      },
+      {
+        id: "tpl_content_001",
+        name: "Content Inspiration",
+        description: "Save ideas, hooks, and references for posts, videos, newsletters, and threads.",
+        author: "Content Creators",
+        authorType: "community",
+        category: "business",
+        icon: "📅",
+        color: "#6366f1",
+        file: "content-calendar.json",
+        fieldSchema: [
+          { id: "f1", label: "Source Title", type: "auto_title", required: true },
+          { id: "f2", label: "URL", type: "auto_url", required: true },
+          { id: "f3", label: "Hook Idea", type: "textarea", required: false, placeholder: "How could this become a post?" },
+          {
+            id: "f4", label: "Format", type: "select", required: false,
+            options: ["Thread", "Newsletter", "Video", "Blog", "Short"]
+          },
+          {
+            id: "f5", label: "Status", type: "select", required: false,
+            options: ["Idea", "Draft", "Scheduled", "Published"]
+          },
+          { id: "f6", label: "Tags", type: "tags", required: false }
+        ]
+      }
+    ];
+
+    // ─────────────────────────────────────────────────────────────
+    // FIELD TYPE → DISPLAY
+    // ─────────────────────────────────────────────────────────────
+    const TYPE_META = {
+      auto_title: { label: "Auto Title", pill: "pill-auto", icon: "🔤" },
+      auto_url: { label: "Auto URL", pill: "pill-auto", icon: "🔗" },
+      text: { label: "Text", pill: "pill-text", icon: "✏️" },
+      textarea: { label: "Long Text", pill: "pill-textarea", icon: "📝" },
+      tags: { label: "Tags", pill: "pill-tags", icon: "🏷️" },
+      select: { label: "Select", pill: "pill-select", icon: "☑️" },
+      bibtex: { label: "BibTeX", pill: "pill-bibtex", icon: "📚" },
+      date: { label: "Date", pill: "pill-date", icon: "📅" },
+      number: { label: "Number", pill: "pill-number", icon: "🔢" },
+      url: { label: "URL", pill: "pill-url", icon: "🌐" },
+    };
+
+    function typeMeta(type) {
+      return TYPE_META[type] || { label: type, pill: "pill-default", icon: "⬜" };
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // RENDER CARD — fields rendered from fieldSchema live
+    // ─────────────────────────────────────────────────────────────
+    function renderCard(t) {
+      const isOfficial = t.authorType === 'official';
+      const visibleFields = t.fieldSchema.slice(0, 4); // show max 4 on card
+      const extra = t.fieldSchema.length - visibleFields.length;
+
+      const fieldsHTML = visibleFields.map(f => {
+        const meta = typeMeta(f.type);
+        return `<div class="card-field">
+      <span class="card-field-label">
+        ${meta.icon} ${f.label}${f.required ? '<span class="req">*</span>' : ''}
+      </span>
+      <span class="field-type-pill ${meta.pill}">${meta.label}</span>
+    </div>`;
+      }).join('');
+
+      const extraHTML = extra > 0
+        ? `<div style="font-size:11px; color:var(--text-faint); text-align:center; padding:4px 0;">+${extra} more field${extra > 1 ? 's' : ''}</div>`
+        : '';
+
+      return `
+    <div class="template-card" data-id="${t.id}" data-category="${t.category}" data-authortype="${t.authorType}">
+      <div class="card-thumb" style="background:linear-gradient(90deg, ${t.color}10, transparent);">
+        <span class="card-icon">${t.icon}</span>
+        <span class="card-name">${t.name}</span>
+        <span class="card-badge ${isOfficial ? 'official' : ''}">${isOfficial ? 'Official' : 'Community'}</span>
+      </div>
+      <div class="card-fields">
+        ${fieldsHTML}
+        ${extraHTML}
+      </div>
+      <div class="card-footer">
+        <span class="card-author">by ${t.author}</span>
+        <div class="card-actions">
+          <button class="btn-prev" onclick="openModal('${t.id}')">Preview</button>
+          <button class="btn-dl" onclick="downloadTemplate('${t.id}')">↓ Get</button>
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // FILTER + RENDER
+    // ─────────────────────────────────────────────────────────────
+    let activeTag = 'all';
+
+    function renderGrid() {
+      const grid = document.getElementById('template-grid');
+      let filtered = templates;
+      if (activeTag === 'community') {
+        filtered = templates.filter(t => t.authorType === 'community');
+      } else if (activeTag !== 'all') {
+        filtered = templates.filter(t => t.category === activeTag);
+      }
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="empty-state">No templates in this category yet. <a href="submit.html" style="color:var(--indigo);">Submit one →</a></div>';
+      } else {
+        grid.innerHTML = filtered.map(renderCard).join('');
+      }
+    }
+
+    document.getElementById('filter-bar').addEventListener('click', e => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      activeTag = btn.dataset.tag;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.tag === activeTag));
+      renderGrid();
+    });
+
+    // ─────────────────────────────────────────────────────────────
+    // MODAL — full field preview rendered from schema
+    // ─────────────────────────────────────────────────────────────
+    let modalTemplate = null;
+
+    function openModal(id) {
+      const t = templates.find(x => x.id === id);
+      if (!t) return;
+      modalTemplate = t;
+
+      document.getElementById('modal-title').textContent = `${t.icon} ${t.name}`;
+      document.getElementById('modal-desc').textContent = t.description;
+      document.getElementById('modal-author').textContent = t.author;
+      document.getElementById('modal-category').textContent = t.category.charAt(0).toUpperCase() + t.category.slice(1);
+      document.getElementById('modal-field-count').textContent = `${t.fieldSchema.length} fields`;
+
+      // Render all fields in modal
+      document.getElementById('modal-fields').innerHTML = t.fieldSchema.map(f => {
+        const meta = typeMeta(f.type);
+        const subInfo = f.subFields ? `<div class="modal-field-hint">Sub-fields: ${f.subFields.join(', ')}</div>` : '';
+        const optInfo = f.options ? `<div class="modal-field-hint">Options: ${f.options.join(' · ')}</div>` : '';
+        const phInfo = f.placeholder ? `<div class="modal-field-hint">e.g. "${f.placeholder}"</div>` : '';
+        return `
+      <div class="modal-field">
+        <div class="modal-field-left">
+          <div class="modal-field-name">${meta.icon} ${f.label}</div>
+          ${subInfo}${optInfo}${phInfo}
+        </div>
+        <div class="modal-field-right">
+          ${f.required ? '<span class="req-dot">Required</span>' : ''}
+          <span class="field-type-pill ${meta.pill}">${meta.label}</span>
+        </div>
+      </div>
+    `;
+      }).join('');
+
+      document.getElementById('modal-overlay').classList.add('open');
+    }
+
+    document.getElementById('modal-close').onclick = () => document.getElementById('modal-overlay').classList.remove('open');
+    document.getElementById('modal-overlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('modal-overlay')) document.getElementById('modal-overlay').classList.remove('open');
+    });
+
+    // ─────────────────────────────────────────────────────────────
+    // DOWNLOAD — fetches from your GitHub repo (raw URL)
+    // Replace YOUR_USERNAME and YOUR_REPO with your real values.
+    // ─────────────────────────────────────────────────────────────
+    async function downloadTemplate(id) {
+      const t = templates.find(x => x.id === id);
+      if (!t) return;
+
+      // In production, replace with real raw GitHub URL:
+      // const url = `https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/templates/${t.file}`;
+      // const res = await fetch(url);
+      // const json = await res.text();
+
+      // DEMO: generate the JSON from registry data
+      const json = JSON.stringify({
+        color: t.color,
+        createdAt: new Date().toISOString(),
+        description: t.description,
+        fieldSchema: t.fieldSchema,
+        icon: t.icon,
+        id: t.id,
+        name: t.name,
+        updatedAt: new Date().toISOString()
+      }, null, 2);
+
+      const blob = new Blob([json], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `araloom-${t.file || t.id + '.json'}`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    document.getElementById('modal-dl-btn').onclick = () => {
+      if (modalTemplate) downloadTemplate(modalTemplate.id);
+    };
+
+    // ─────────────────────────────────────────────────────────────
+    renderGrid();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works : Araloom</title>
+  <meta name="description"
+    content="Learn how Araloom helps you capture, structure, and link knowledge from any webpage.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .page-hero {
+      padding: 130px 24px 72px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .page-hero-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(36px, 5vw, 60px);
+      margin-bottom: 14px;
+    }
+
+    .page-hero p {
+      font-size: 18px;
+      color: var(--text-dim);
+      max-width: 500px;
+    }
+
+    /* Steps */
+    #steps {
+      background: var(--bg);
+    }
+
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+      gap: 40px;
+      padding: 52px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .step-row:last-child {
+      border-bottom: none;
+    }
+
+    .step-num-big {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 52px;
+      color: var(--text-faint);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      padding-top: 4px;
+    }
+
+    .step-content h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .step-detail {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .step-detail strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .step-detail ul {
+      padding-left: 16px;
+    }
+
+    .step-detail li {
+      margin-bottom: 5px;
+      line-height: 1.55;
+    }
+
+    .step-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Field type pill examples */
+    .field-preview {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .field-preview-label {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .field-type-badge {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--indigo-dim);
+      color: var(--indigo);
+      border: 1px solid var(--indigo-border);
+    }
+
+    .field-type-badge.auto {
+      background: var(--orange-dim);
+      color: var(--orange);
+      border-color: var(--orange-border);
+    }
+
+    /* Template types */
+    #field-types {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+
+    .types-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .type-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+
+    .type-card code {
+      font-family: 'DM Mono', monospace, monospace;
+      background: var(--indigo-dim);
+      color: var(--indigo);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .type-card p {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.55;
+    }
+
+    /* FAQ */
+    #faq {
+      background: var(--bg);
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 720px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-q {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 22px 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .faq-q:hover {
+      color: var(--indigo);
+    }
+
+    .faq-q .arrow {
+      font-size: 18px;
+      color: var(--text-faint);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+
+    .faq-a {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding-bottom: 20px;
+    }
+
+    .faq-item.open .arrow {
+      transform: rotate(45deg);
+    }
+
+    @media (max-width: 860px) {
+      .step-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .step-num-big {
+        font-size: 36px;
+      }
+
+      .types-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-mark"><span></span><span></span><span></span><span></span></div>
+        Araloom
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="how-it-works.html" class="active">How It Works</a></li>
+        <li><a href="gallery.html">Templates</a></li>
+        <li><a href="submit.html">Submit</a></li>
+      </ul>
+      <a href="#" class="btn-primary">Get Extension ↓</a>
+    </div>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="section-label">Process</div>
+      <h1>How Araloom works</h1>
+      <p>From raw browsing to organized, linked knowledge in three simple steps.</p>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <section id="steps">
+    <div class="container">
+      <div class="steps-list">
+
+        <div class="step-row">
+          <div class="step-num-big">01</div>
+          <div class="step-content">
+            <h3>Capture from any page</h3>
+            <p>Select any text on any website and the Araloom extension activates. It captures the selected content
+              along with the page URL, title, and timestamp automatically. No copy-pasting into another tab.</p>
+            <div class="step-detail">
+              <strong>What gets captured automatically</strong>
+              <ul>
+                <li>Selected text or entire section</li>
+                <li>Page URL (source always saved)</li>
+                <li>Page title (auto_title field)</li>
+                <li>Capture timestamp</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-visual">
+            <div
+              style="font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">
+              Auto-captured fields</div>
+            <div class="field-preview">
+              <span class="field-preview-label">🔤 Title</span>
+              <span class="field-type-badge auto">auto_title</span>
+            </div>
+            <div class="field-preview">
+              <span class="field-preview-label">🔗 URL</span>
+              <span class="field-type-badge auto">auto_url</span>
+            </div>
+            <div class="field-preview">
+              <span class="field-preview-label">📋 Selected Text</span>
+              <span class="field-type-badge">highlight</span>
+            </div>
+            <div class="field-preview">
+              <span class="field-preview-label">🕐 Captured At</span>
+              <span class="field-type-badge auto">auto</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-row">
+          <div class="step-num-big">02</div>
+          <div class="step-content">
+            <h3>Structure into a Loom</h3>
+            <p>Each capture flows into a template; a set of fields you define. Templates are JSON files you import into
+              Araloom. You can download them from the gallery, or build your own and export them to share.</p>
+            <div class="step-detail">
+              <strong>Template field types</strong>
+              <ul>
+                <li><code>text</code> - short single-line input</li>
+                <li><code>textarea</code> - multi-line notes</li>
+                <li><code>tags</code> - comma-separated chips</li>
+                <li><code>select</code> - dropdown options</li>
+                <li><code>bibtex</code> - structured citation block</li>
+                <li><code>date</code>, <code>number</code>, <code>url</code></li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-visual">
+            <div
+              style="font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">
+              Example: Research Papers template</div>
+            <div class="field-preview">
+              <span class="field-preview-label">📖 Title</span>
+              <span class="field-type-badge auto">auto_title</span>
+            </div>
+            <div class="field-preview">
+              <span class="field-preview-label">📚 BibTeX</span>
+              <span class="field-type-badge">bibtex</span>
+            </div>
+            <div class="field-preview">
+              <span class="field-preview-label">📝 Notes</span>
+              <span class="field-type-badge">textarea</span>
+            </div>
+            <div class="field-preview">
+              <span class="field-preview-label">🏷️ Tags</span>
+              <span class="field-type-badge">tags</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-row">
+          <div class="step-num-big">03</div>
+          <div class="step-content">
+            <h3>Link with @mentions</h3>
+            <p>Use @mentions in any text field to link one entry to another. Reference a resume from a job application.
+              Link a paper to your thesis notes. Build a connected web of knowledge, not a pile of tabs.</p>
+            <div class="step-detail">
+              <strong>Example links</strong>
+              <ul>
+                <li>Job application → <code>@Resume-v3</code></li>
+                <li>Research paper → <code>@Thesis-Chapter-2</code></li>
+                <li>Design ref → <code>@Brand-Guidelines</code></li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-visual">
+            <div
+              style="font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">
+              Notes field with links</div>
+            <div
+              style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px; font-size:13px; color:var(--text-dim); line-height:1.7;">
+              Compare with <span style="color:var(--indigo); font-weight:600; cursor:pointer;">@GPT4-Paper</span> and
+              <span style="color:var(--indigo); font-weight:600; cursor:pointer;">@LLaMA2</span>. Good for tasks
+              overlapping with <span
+                style="color:var(--indigo); font-weight:600; cursor:pointer;">@Thesis-Chapter-3</span>.
+            </div>
+            <div style="margin-top:10px; font-size:12px; color:var(--text-faint);">
+              Clicking an @mention jumps to that Loom entry instantly.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FIELD TYPES -->
+  <section id="field-types">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">Reference</div>
+        <h2>Template field types</h2>
+        <p class="section-sub">Every field in a template JSON maps to one of these types.</p>
+      </div>
+      <div class="types-grid">
+        <div class="type-card">
+          <code>auto_title</code>
+          <p>Automatically captures the page's &lt;title&gt; tag. No typing required.</p>
+        </div>
+        <div class="type-card">
+          <code>auto_url</code>
+          <p>Automatically saves the full URL of the page being captured.</p>
+        </div>
+        <div class="type-card">
+          <code>text</code>
+          <p>Single-line text input. Good for names, companies, short values.</p>
+        </div>
+        <div class="type-card">
+          <code>textarea</code>
+          <p>Multi-line text. Use for notes, summaries, takeaways. Supports @mentions.</p>
+        </div>
+        <div class="type-card">
+          <code>tags</code>
+          <p>Comma-separated tag chips. Great for categorizing and filtering entries.</p>
+        </div>
+        <div class="type-card">
+          <code>select</code>
+          <p>Dropdown with predefined options. Useful for status fields like Applied/Rejected.</p>
+        </div>
+        <div class="type-card">
+          <code>bibtex</code>
+          <p>Structured citation block with sub-fields: author, year, journal, doi, title.</p>
+        </div>
+        <div class="type-card">
+          <code>date</code>
+          <p>Date picker. Great for deadlines, publication dates, follow-up reminders.</p>
+        </div>
+        <div class="type-card">
+          <code>number</code>
+          <p>Numeric input. Use for salaries, prices, scores, quantities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-label">FAQ</div>
+        <h2>Common questions</h2>
+      </div>
+      <div class="faq-list" id="faq-list">
+        <div class="faq-item">
+          <button class="faq-q">
+            Do I need an account to use Araloom?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">No. Araloom is a browser extension, your data stays in your browser. No sign-up, no cloud
+            sync required. You can export your Looms at any time as JSON or CSV.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            How do I import a template from the gallery?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">Download the .json file from the gallery page. Then open Araloom, go to Templates → Import,
+            and select the file. The template loads instantly and is ready to use on any website.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            Can I create my own templates?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">Yes. Inside Araloom you can build templates by adding fields, choosing types, and setting
+            labels. When you're done, export it as a .json file. You can share it by submitting it to the gallery.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            Does it work on every website?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">Araloom works on any website you can open in a Chrome-based browser (Chrome, Brave, Edge,
+            Arc). A small number of sites that block extensions may not support text selection capture.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">
+            Is my data private?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">Yes. All your captured data is stored locally in your browser's extension storage. Nothing
+            is sent to any server. You own your data completely.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <div class="logo-mark" style="width:22px;height:22px;gap:2px;">
+          <span style="border-radius:2px;"></span><span style="border-radius:2px;"></span>
+          <span style="border-radius:2px;"></span><span style="border-radius:2px;"></span>
+        </div>
+        Araloom
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="gallery.html">Templates</a>
+        <a href="submit.html">Submit</a>
+        <a href="https://github.com/YOUR_USERNAME/araloom" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <div class="footer-copy">© 2026 Araloom</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('faq-list').addEventListener('click', e => {
+      const btn = e.target.closest('.faq-q');
+      if (!btn) return;
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  </script>
+</body>
+
+</html>
