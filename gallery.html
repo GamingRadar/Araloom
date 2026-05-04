@@ -285,6 +285,10 @@
       font-size: 13px;
     }
 
+    .fake-select-wrap {
+      position: relative;
+    }
+
     .fake-select {
       height: 38px;
       background: var(--surface2);
@@ -294,8 +298,54 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: var(--text-faint);
+      color: var(--text-dim);
       font-size: 13px;
+      cursor: pointer;
+    }
+
+    .fake-options-list {
+      margin-top: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .fake-option {
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .fake-option:first-child {
+      background: var(--indigo-dim);
+      color: var(--indigo);
+      font-weight: 600;
+    }
+
+    .fake-checkbox-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 0;
+    }
+
+    .fake-checkbox {
+      width: 18px;
+      height: 18px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--indigo);
+      font-size: 12px;
     }
 
     .fake-tags-container {
@@ -325,6 +375,30 @@
       border-radius: 8px;
       border: 1px dashed var(--orange-border);
     }
+
+    .fake-bibtex-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--text-faint);
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .fake-bibtex-box::after {
+      content: 'Segmenting tool active...';
+      position: absolute;
+      bottom: 8px;
+      right: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      color: var(--indigo);
+      font-weight: 700;
+    }
+
 
 
     .pill-auto {
@@ -719,7 +793,9 @@
       date: { label: "Date", icon: "📅" },
       number: { label: "Number", icon: "🔢" },
       url: { label: "URL", icon: "🌐" },
+      checkbox: { label: "Checkbox", icon: "☑️" },
     };
+
 
     function typeMeta(type) {
       return TYPE_META[type] || { label: type, icon: "⬜" };
@@ -853,17 +929,45 @@
             } else if (f.type === 'auto_url') {
               visual = `<div class="fake-auto">🔗 (Auto-filled URL)</div>`;
             } else if (f.type === 'textarea') {
-              visual = `<div class="fake-textarea">${f.placeholder || '...'}</div>`;
+              visual = `<div class="fake-textarea">${f.placeholder || 'Write your notes here...'}</div>`;
             } else if (f.type === 'select') {
-              visual = `<div class="fake-select"><span>Select Option...</span> <span>▼</span></div>`;
+              const options = f.options || ['Option 1', 'Option 2'];
+              visual = `
+                <div class="fake-select-wrap">
+                  <div class="fake-select">
+                    <span>${options[0]}</span>
+                    <span>▼</span>
+                  </div>
+                  <div class="fake-options-list">
+                    ${options.map(opt => `<div class="fake-option">${opt}</div>`).join('')}
+                  </div>
+                </div>
+              `;
             } else if (f.type === 'tags') {
               visual = `<div class="fake-tags-container"><div class="fake-tag">tag1</div><div class="fake-tag">tag2</div></div>`;
             } else if (f.type === 'date') {
-              visual = `<div class="fake-input">📅 Pick Date</div>`;
+              visual = `<div class="fake-input">📅 Select Date...</div>`;
             } else if (f.type === 'number') {
-              visual = `<div class="fake-input">🔢 123</div>`;
+              visual = `<div class="fake-input">🔢 Enter number...</div>`;
+            } else if (f.type === 'checkbox') {
+              visual = `
+                <div class="fake-checkbox-wrap">
+                  <div class="fake-checkbox">✓</div>
+                  <span style="font-size:12px; color:var(--text-dim);">Checked by default</span>
+                </div>
+              `;
+            } else if (f.type === 'bibtex') {
+              visual = `
+                <div class="fake-bibtex-box">
+                  @article{araloom2026,<br>
+                  &nbsp;&nbsp;title={Advanced Template System},<br>
+                  &nbsp;&nbsp;author={Araloom Team},<br>
+                  &nbsp;&nbsp;year={2026}<br>
+                  }
+                </div>
+              `;
             } else {
-              visual = `<div class="fake-input">${f.placeholder || '...'}</div>`;
+              visual = `<div class="fake-input">${f.placeholder || 'Type here...'}</div>`;
             }
 
             return `
@@ -877,6 +981,7 @@
           }).join('')}
         </div>
       `;
+
     }
 
 
