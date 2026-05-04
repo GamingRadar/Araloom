@@ -51,11 +51,12 @@
     .step-row {
       display: grid;
       grid-template-columns: 80px 1fr 1fr;
-      gap: 40px;
-      padding: 52px 0;
+      gap: 64px;
+      padding: 80px 0;
       border-bottom: 1px solid var(--border);
-      align-items: start;
+      align-items: center;
     }
+
 
     .step-row:last-child {
       border-bottom: none;
@@ -66,7 +67,7 @@
       font-weight: 800;
       font-size: 64px;
       color: var(--orange);
-      opacity: 0.15;
+      opacity: 0.35;
       line-height: 1;
       letter-spacing: -0.04em;
       padding-top: 4px;
@@ -315,19 +316,19 @@
         <div class="step-row">
           <div class="step-num-big">01</div>
           <div class="step-content">
-            <h3>Capture from any page</h3>
-            <p>Select any text on any website and the Araloom extension activates. It captures the selected content
-              along with the page URL, title, and timestamp automatically. No copy-pasting into another tab.</p>
+            <h3>Highlight to Capture</h3>
+            <p>Select any text on a website and the extension activates instantly. It grabs what you need, along with
+              the source details, automatically.</p>
             <div class="step-detail">
-              <strong>What gets captured automatically</strong>
+              <strong>Smart Capture:</strong>
               <ul>
-                <li>Selected text or entire section</li>
-                <li>Page URL (source always saved)</li>
-                <li>Page title (auto_title field)</li>
-                <li>Capture timestamp</li>
+                <li>Selected text or images</li>
+                <li>Website URL & Page Title</li>
+                <li>Automatic timestamp</li>
               </ul>
             </div>
           </div>
+
           <div class="step-visual">
             <div
               style="font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">
@@ -354,22 +355,20 @@
         <div class="step-row">
           <div class="step-num-big">02</div>
           <div class="step-content">
-            <h3>Structure into a Loom</h3>
-            <p>Each capture flows into a template; a set of fields you define. Templates define how your data is
-              structured.
-              You can download them from the gallery, or build your own and export them to share.</p>
+            <h3>Organize with Fields</h3>
+            <p>Your clips flow into smart forms. Instead of a messy pile of notes, you get structured entries that are
+              easy to search and sort.</p>
             <div class="step-detail">
-              <strong>Template field types</strong>
+              <strong>Common Fields:</strong>
               <ul>
-                <li><code>text</code> - short single-line input</li>
-                <li><code>textarea</code> - multi-line notes</li>
-                <li><code>tags</code> - comma-separated chips</li>
-                <li><code>select</code> - dropdown options</li>
-                <li><code>bibtex</code> - structured citation block</li>
-                <li><code>date</code>, <code>number</code>, <code>url</code></li>
+                <li><code>Text</code> for names & titles</li>
+                <li><code>Select</code> for status or priority</li>
+                <li><code>Tags</code> for easy categorization</li>
+                <li><code>Date</code> for deadlines or follow-ups</li>
               </ul>
             </div>
           </div>
+
           <div class="step-visual">
             <div
               style="font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">
@@ -397,28 +396,34 @@
           <div class="step-num-big">03</div>
           <div class="step-content">
             <h3>Link with @mentions</h3>
-            <p>Use @mentions in any text field to link one entry to another. Reference a resume from a job application.
-              Link a paper to your thesis notes. Build a connected web of knowledge, not a pile of tabs.</p>
+            <p>Connect your ideas. Use <strong>@mentions</strong> to link one entry to another, creating a web of
+              related knowledge.</p>
             <div class="step-detail">
-              <strong>Example links</strong>
+              <strong>Build Connections:</strong>
               <ul>
-                <li>Job application → <code>@Resume-v3</code></li>
-                <li>Research paper → <code>@Thesis-Chapter-2</code></li>
-                <li>Design ref → <code>@Brand-Guidelines</code></li>
+                <li>Link a job post to your <code>@Resume</code></li>
+                <li>Link a research paper to a <code>@Project</code></li>
+                <li>Link an inspiration to a <code>@Moodboard</code></li>
               </ul>
             </div>
           </div>
+
           <div class="step-visual">
             <div
               style="font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">
               Notes field with links</div>
             <div
-              style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:14px; font-size:13px; color:var(--text-dim); line-height:1.7;">
-              Compare with <span style="color:var(--indigo); font-weight:600; cursor:pointer;">@GPT4-Paper</span> and
-              <span style="color:var(--indigo); font-weight:600; cursor:pointer;">@LLaMA2</span>. Good for tasks
+              style="background:var(--surface2); border:1px solid var(--indigo-border); border-radius:10px; padding:18px; font-size:14px; color:var(--text); line-height:1.7; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);">
+              Compare with <span
+                style="color:var(--indigo); font-weight:700; background:rgba(99, 102, 241, 0.15); padding:2px 6px; border-radius:4px; cursor:pointer;">@GPT4-Paper</span>
+              and
+              <span
+                style="color:var(--indigo); font-weight:700; background:rgba(99, 102, 241, 0.15); padding:2px 6px; border-radius:4px; cursor:pointer;">@LLaMA2</span>.
+              Good for tasks
               overlapping with <span
-                style="color:var(--indigo); font-weight:600; cursor:pointer;">@Thesis-Chapter-3</span>.
+                style="color:var(--indigo); font-weight:700; background:rgba(99, 102, 241, 0.15); padding:2px 6px; border-radius:4px; cursor:pointer;">@Thesis-Chapter-3</span>.
             </div>
+
             <div style="margin-top:10px; font-size:12px; color:var(--text-faint);">
               Clicking an @mention jumps to that Loom entry instantly.
             </div>
