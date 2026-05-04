@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Submit a Template : Araloom</title>
-  <meta name="description" content="Share your Araloom template with the community. Submit via GitHub or email.">
+  <meta name="description" content="Share your template. Built something useful? Submit it.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=ital,wght@0,400;0,500;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap"
@@ -420,7 +420,7 @@
               <div class="how-step-num">1</div>
               <div class="how-step-text">
                 <h4>Build your template in Araloom</h4>
-                <p>Create a template inside the extension with the fields you need — text, tags, select, dates, etc.</p>
+                <p>Create a template inside the extension with the fields you need, text, tags, select, dates, etc.</p>
               </div>
             </div>
             <div class="how-step">
@@ -436,7 +436,7 @@
               <div class="how-step-text">
                 <h4>Submit via the form or GitHub</h4>
                 <p>Use the form on the right to email it to us, or open a GitHub Issue if you prefer. We review and
-                  publish it — usually within 48 hours.</p>
+                  publish it, usually within 48 hours.</p>
               </div>
             </div>
             <div class="how-step">
@@ -483,7 +483,7 @@
             <div class="guideline-list">
               <div class="guideline-item">
                 <span class="guideline-icon">✅</span>
-                <p>Template should have a clear, specific purpose — not just "general notes"</p>
+                <p>Template should have a clear, specific purpose, not just "general notes"</p>
               </div>
               <div class="guideline-item">
                 <span class="guideline-icon">✅</span>
@@ -495,7 +495,7 @@
               </div>
               <div class="guideline-item">
                 <span class="guideline-icon">❌</span>
-                <p>No duplicates — check the gallery before submitting a similar template</p>
+                <p>No duplicates, check the gallery before submitting a similar template</p>
               </div>
               <div class="guideline-item">
                 <span class="guideline-icon">❌</span>
@@ -568,7 +568,7 @@
               </div>
 
               <button type="submit" class="form-submit" id="submit-btn">
-                Send Submission →
+                Submit Template →
               </button>
               <p class="form-note">We review all submissions and reply within 48 hours. Your name will appear as the
                 template author in the gallery.</p>
@@ -675,12 +675,12 @@
           form.style.display = 'none';
           successMsg.classList.add('show');
         } else {
-          btn.textContent = 'Something went wrong — try again';
+          btn.textContent = 'Something went wrong, try again';
           btn.disabled = false;
         }
       } catch {
         // Network error fallback
-        btn.textContent = 'Network error — try GitHub →';
+        btn.textContent = 'Network error, try GitHub →';
         btn.disabled = false;
       }
     });
