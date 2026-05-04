@@ -1,0 +1,112 @@
+{
+  "templates": [
+    {
+      "id": "tab_mnksbnl6_f169c7r",
+      "name": "Research Papers",
+      "category": "research",
+      "author": "Araloom Team",
+      "authorType": "official",
+      "description": "Simplified capture for academic research title, URL, BibTeX citation, notes, and tags.",
+      "file": "research-papers.json",
+      "icon": "📚",
+      "color": "#6366f1",
+      "fieldCount": 5
+    },
+    {
+      "id": "tpl_jobs_001",
+      "name": "Job Tracker",
+      "category": "jobs",
+      "author": "Araloom Team",
+      "authorType": "official",
+      "description": "Track applications from LinkedIn, Indeed, or any job board. Status, salary, deadline in one view.",
+      "file": "job-tracker.json",
+      "icon": "💼",
+      "color": "#6366f1",
+      "fieldCount": 8
+    },
+    {
+      "id": "tpl_design_001",
+      "name": "Design Inspiration",
+      "category": "design",
+      "author": "Araloom Team",
+      "authorType": "official",
+      "description": "Collect UI references, color palettes, and typography from any website. Build your visual moodboard.",
+      "file": "design-inspiration.json",
+      "icon": "🎨",
+      "color": "#e85d3a",
+      "fieldCount": 5
+    },
+    {
+      "id": "tpl_learning_001",
+      "name": "Learning Path",
+      "category": "learning",
+      "author": "Araloom Team",
+      "authorType": "official",
+      "description": "Structure online courses and tutorials. Track what you've learned and what to do next.",
+      "file": "learning-path.json",
+      "icon": "🎓",
+      "color": "#6366f1",
+      "fieldCount": 6
+    },
+    {
+      "id": "tpl_biz_001",
+      "name": "Deal Flow Tracker",
+      "category": "business",
+      "author": "VC Network",
+      "authorType": "community",
+      "description": "Track startups, funding rounds, and investment signals from Crunchbase, TechCrunch, and more.",
+      "file": "deal-flow.json",
+      "icon": "📈",
+      "color": "#e85d3a",
+      "fieldCount": 7
+    },
+    {
+      "id": "tpl_books_001",
+      "name": "Book & Article Notes",
+      "category": "learning",
+      "author": "Reader's Circle",
+      "authorType": "community",
+      "description": "Capture quotes, key ideas, and action items from anything you read online.",
+      "file": "book-notes.json",
+      "icon": "📖",
+      "color": "#6366f1",
+      "fieldCount": 6
+    },
+    {
+      "id": "tpl_ux_001",
+      "name": "UX Research Notes",
+      "category": "design",
+      "author": "Design Collective",
+      "authorType": "community",
+      "description": "Collect competitor flows, user feedback patterns, and usability observations from any website.",
+      "file": "ux-research.json",
+      "icon": "🔬",
+      "color": "#e85d3a",
+      "fieldCount": 6
+    },
+    {
+      "id": "tpl_startup_001",
+      "name": "Startup Research",
+      "category": "research",
+      "author": "Founder Community",
+      "authorType": "community",
+      "description": "Track competitors, product launches, and market positioning from any source across the web.",
+      "file": "startup-research.json",
+      "icon": "🚀",
+      "color": "#e85d3a",
+      "fieldCount": 6
+    },
+    {
+      "id": "tpl_content_001",
+      "name": "Content Inspiration",
+      "category": "business",
+      "author": "Content Creators",
+      "authorType": "community",
+      "description": "Save ideas, hooks, and references for posts, videos, newsletters, and threads.",
+      "file": "content-calendar.json",
+      "icon": "📅",
+      "color": "#6366f1",
+      "fieldCount": 6
+    }
+  ]
+}

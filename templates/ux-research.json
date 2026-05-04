@@ -1,0 +1,16 @@
+{
+  "id": "tpl_ux_001",
+  "name": "UX Research Notes",
+  "description": "Collect competitor flows, user feedback patterns, and usability observations from any website.",
+  "author": "Design Collective",
+  "icon": "🔬",
+  "color": "#e85d3a",
+  "fieldSchema": [
+    { "id": "f1", "label": "Page", "type": "auto_title", "required": true },
+    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
+    { "id": "f3", "label": "Observation", "type": "textarea", "required": false, "placeholder": "What did you notice?" },
+    { "id": "f4", "label": "Sentiment", "type": "select", "required": false, "options": ["Positive", "Neutral", "Negative", "Mixed"] },
+    { "id": "f5", "label": "Project Link", "type": "text", "required": false, "placeholder": "@ProjectName" },
+    { "id": "f6", "label": "Tags", "type": "tags", "required": false, "placeholder": "onboarding, nav, cta..." }
+  ]
+}

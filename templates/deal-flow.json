@@ -1,0 +1,17 @@
+{
+  "id": "tpl_biz_001",
+  "name": "Deal Flow Tracker",
+  "description": "Track startups, funding rounds, and investment signals from Crunchbase, TechCrunch, and more.",
+  "author": "VC Network",
+  "icon": "📈",
+  "color": "#e85d3a",
+  "fieldSchema": [
+    { "id": "f1", "label": "Company", "type": "auto_title", "required": true },
+    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
+    { "id": "f3", "label": "Stage", "type": "select", "required": false, "options": ["Pre-seed", "Seed", "Series A", "Series B", "Growth", "Public"] },
+    { "id": "f4", "label": "Valuation", "type": "text", "required": false },
+    { "id": "f5", "label": "Thesis Fit", "type": "select", "required": false, "options": ["Strong", "Moderate", "Weak", "Pass"] },
+    { "id": "f6", "label": "Notes", "type": "textarea", "required": false },
+    { "id": "f7", "label": "Tags", "type": "tags", "required": false, "placeholder": "ai, fintech, b2b..." }
+  ]
+}

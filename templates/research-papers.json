@@ -1,0 +1,15 @@
+{
+  "id": "tab_mnksbnl6_f169c7r",
+  "name": "Research Papers",
+  "description": "Simplified capture for academic research title, URL, BibTeX citation, notes, and tags.",
+  "author": "Araloom Team",
+  "icon": "📚",
+  "color": "#6366f1",
+  "fieldSchema": [
+    { "id": "f1", "label": "Title", "type": "auto_title", "required": true },
+    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
+    { "id": "f3", "label": "BibTeX", "type": "bibtex", "required": false, "subFields": ["author", "year", "journal", "doi", "title"] },
+    { "id": "f4", "label": "Notes", "type": "textarea", "required": false, "placeholder": "Brief summary or takeaway..." },
+    { "id": "f5", "label": "Tags", "type": "tags", "required": false, "placeholder": "ai, nlp, math..." }
+  ]
+}

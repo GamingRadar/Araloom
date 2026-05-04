@@ -1,0 +1,16 @@
+{
+  "id": "tpl_startup_001",
+  "name": "Startup Research",
+  "description": "Track competitors, product launches, and market positioning from any source across the web.",
+  "author": "Founder Community",
+  "icon": "🚀",
+  "color": "#e85d3a",
+  "fieldSchema": [
+    { "id": "f1", "label": "Company/Product", "type": "auto_title", "required": true },
+    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
+    { "id": "f3", "label": "Category", "type": "text", "required": false },
+    { "id": "f4", "label": "Key Points", "type": "textarea", "required": false },
+    { "id": "f5", "label": "Threat Level", "type": "select", "required": false, "options": ["Low", "Medium", "High", "Watch"] },
+    { "id": "f6", "label": "Tags", "type": "tags", "required": false }
+  ]
+}
