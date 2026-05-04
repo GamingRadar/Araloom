@@ -69,9 +69,9 @@
       font-family: 'Syne', sans-serif;
       font-weight: 800;
       font-size: 13px;
-      color: var(--indigo);
-      background: var(--indigo-dim);
-      border: 1px solid var(--indigo-border);
+      color: var(--orange);
+      background: var(--orange-dim);
+      border: 1px solid var(--orange-border);
       border-radius: 6px;
       width: 28px;
       height: 28px;
@@ -81,6 +81,7 @@
       flex-shrink: 0;
       margin-top: 1px;
     }
+
 
     .how-step-text h4 {
       font-family: 'Syne', sans-serif;
@@ -411,8 +412,11 @@
     </div>
   </div>
 
-  <section id="submit-section">
-    <div class="container">
+  <section id="submit-section" style="position:relative; overflow:hidden;">
+    <div class="glow-violet" style="top:50%; right:-150px;"></div>
+    <div class="glow-orange" style="top:10%; left:-100px;"></div>
+    <div class="container" style="position:relative; z-index:1;">
+
       <div class="submit-grid">
 
         <!-- LEFT: How it works + Schema -->

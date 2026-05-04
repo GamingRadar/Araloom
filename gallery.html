@@ -91,11 +91,13 @@
     }
 
     .filter-btn.active {
-      background: var(--indigo);
-      border-color: var(--indigo);
+      background: var(--orange);
+      border-color: var(--orange);
       color: #fff;
       font-weight: 600;
+      box-shadow: 0 4px 12px rgba(232, 93, 58, 0.2);
     }
+
 
     .template-grid {
       display: grid;
@@ -481,8 +483,11 @@
     </div>
   </div>
 
-  <section id="gallery-section">
-    <div class="container">
+  <section id="gallery-section" style="position:relative; overflow:hidden;">
+    <div class="glow-violet" style="top:10%; right:-100px;"></div>
+    <div class="glow-orange" style="bottom:20%; left:-100px;"></div>
+    <div class="container" style="position:relative; z-index:1;">
+
       <div class="filter-bar" id="filter-bar">
         <button class="filter-btn active" data-tag="all">All</button>
         <button class="filter-btn" data-tag="research">Research</button>

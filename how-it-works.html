@@ -64,12 +64,14 @@
     .step-num-big {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 52px;
-      color: var(--text-faint);
+      font-size: 64px;
+      color: var(--orange);
+      opacity: 0.15;
       line-height: 1;
       letter-spacing: -0.04em;
       padding-top: 4px;
     }
+
 
     .step-content h3 {
       font-size: 22px;
@@ -303,8 +305,11 @@
   </div>
 
   <!-- STEPS -->
-  <section id="steps">
-    <div class="container">
+  <section id="steps" style="position:relative; overflow:hidden;">
+    <div class="glow-violet" style="top:20%; left:-100px;"></div>
+    <div class="glow-orange" style="bottom:10%; right:-100px;"></div>
+    <div class="container" style="position:relative; z-index:1;">
+
       <div class="steps-list">
 
         <div class="step-row">

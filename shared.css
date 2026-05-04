@@ -3,18 +3,24 @@
   --bg: #070711;
   --surface: #0f0f1a;
   --surface2: #161622;
-  --border: rgba(50, 47, 83, 0.784);
-  --border-hover: rgba(136, 138, 246, 0.486);
+  --border: rgba(170, 172, 246, 0.15); /* Using Light Lavender hint */
+  --border-hover: rgba(170, 172, 246, 0.4);
   --text: #f0e6d3;
   --text-dim: rgba(240, 230, 211, 0.6);
-  --text-faint: rgba(240, 230, 211, 0.303);
-  --indigo: #6366f1;
+  --text-faint: rgba(240, 230, 211, 0.3);
+  
+  --indigo: #6366f1; /* Dark Violet */
+  --indigo-light: #aaacf6; /* Light Lavender */
   --indigo-dim: rgba(99, 102, 241, 0.12);
-  --indigo-border: rgba(131, 132, 239, 0.447);
-  --orange: #f5532a;
+  --indigo-border: rgba(170, 172, 246, 0.3);
+  
+  --orange: #e85d3a; /* Main Orange */
+  --orange-light: #e09a88; /* Light Orange */
   --orange-dim: rgba(232, 93, 58, 0.12);
-  --orange-border: rgba(232, 93, 58, 0.25);
+  --orange-border: rgba(232, 93, 58, 0.3);
+  
   --radius: 12px;
+
 }
 
 *,
@@ -391,6 +397,37 @@ footer {
 }
 
 /* ── RESPONSIVE ── */
+/* ── UTILITIES ── */
+.text-orange { color: var(--orange); }
+.text-indigo { color: var(--indigo); }
+.bg-orange { background: var(--orange); }
+.bg-indigo { background: var(--indigo); }
+
+.glow-violet {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-orange {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(232, 93, 58, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(22, 22, 34, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(170, 172, 246, 0.1);
+}
+
 @media (max-width: 860px) {
   .nav-links {
     display: none;
