@@ -15,7 +15,8 @@ window.ARALOOM_TEMPLATES = {
       "file": "research-papers.json",
       "icon": "📚",
       "color": "#6366f1",
-      "fieldCount": 5
+      "fieldCount": 5,
+      "fieldPreview": ["auto_title", "auto_url", "bibtex"]
     },
     {
       "id": "tpl_jobs_001",
@@ -27,7 +28,8 @@ window.ARALOOM_TEMPLATES = {
       "file": "job-tracker.json",
       "icon": "💼",
       "color": "#6366f1",
-      "fieldCount": 8
+      "fieldCount": 8,
+      "fieldPreview": ["auto_title", "auto_url", "select"]
     },
     {
       "id": "tpl_design_001",
@@ -39,7 +41,8 @@ window.ARALOOM_TEMPLATES = {
       "file": "design-inspiration.json",
       "icon": "🎨",
       "color": "#e85d3a",
-      "fieldCount": 5
+      "fieldCount": 5,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"]
     },
     {
       "id": "tpl_learning_001",
@@ -51,7 +54,8 @@ window.ARALOOM_TEMPLATES = {
       "file": "learning-path.json",
       "icon": "🎓",
       "color": "#6366f1",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "select"]
     },
     {
       "id": "tpl_biz_001",
@@ -63,7 +67,8 @@ window.ARALOOM_TEMPLATES = {
       "file": "deal-flow.json",
       "icon": "📈",
       "color": "#e85d3a",
-      "fieldCount": 7
+      "fieldCount": 7,
+      "fieldPreview": ["auto_title", "auto_url", "select"]
     },
     {
       "id": "tpl_books_001",
@@ -75,7 +80,8 @@ window.ARALOOM_TEMPLATES = {
       "file": "book-notes.json",
       "icon": "📖",
       "color": "#6366f1",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"]
     },
     {
       "id": "tpl_ux_001",
@@ -87,7 +93,8 @@ window.ARALOOM_TEMPLATES = {
       "file": "ux-research.json",
       "icon": "🔬",
       "color": "#e85d3a",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"]
     },
     {
       "id": "tpl_startup_001",
@@ -99,7 +106,8 @@ window.ARALOOM_TEMPLATES = {
       "file": "startup-research.json",
       "icon": "🚀",
       "color": "#e85d3a",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"]
     },
     {
       "id": "tpl_content_001",
@@ -111,9 +119,11 @@ window.ARALOOM_TEMPLATES = {
       "file": "content-calendar.json",
       "icon": "📅",
       "color": "#6366f1",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"]
     }
   ],
+
   details: {
     "tab_mnksbnl6_f169c7r": {
       "id": "tab_mnksbnl6_f169c7r",

@@ -67,12 +67,21 @@
       padding: 48px 24px 80px;
     }
 
+    .gallery-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
     .filter-bar {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 36px;
     }
+
 
     .filter-btn {
       background: var(--surface);
@@ -99,6 +108,42 @@
       font-weight: 600;
       box-shadow: 0 4px 12px rgba(232, 93, 58, 0.2);
     }
+
+    .search-wrap {
+      position: relative;
+      min-width: 280px;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 9px 18px 9px 40px;
+      font-size: 14px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--indigo-border);
+      box-shadow: 0 0 0 4px var(--indigo-dim);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-faint);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
 
 
     .template-grid {
@@ -162,44 +207,125 @@
     }
 
     .card-fields {
-      padding: 12px;
+      padding: 16px 18px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      flex: 1;
+      gap: 6px;
+      min-height: 100px;
     }
 
-    .card-field {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      padding: 7px 10px;
+    .card-field-preview {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 4px 0;
+    }
+
+    .card-field-preview i {
+      font-style: normal;
+      opacity: 0.8;
+    }
+
+    .card-fields-more {
+      font-size: 11px;
+      color: var(--text-faint);
+      margin-top: 4px;
+      padding-top: 6px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Modal Form UI */
+    .modal-form-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .fake-field {
+      display: flex;
+      flex-direction: column;
       gap: 8px;
     }
 
-    .card-field-label {
-      font-size: 11px;
-      color: var(--text-dim);
+    .fake-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .card-field-label .req {
+    .fake-label .req {
       color: var(--orange);
-      margin-left: 2px;
-      font-size: 10px;
     }
 
-    .field-type-pill {
-      font-size: 9px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      padding: 2px 7px;
-      border-radius: 4px;
-      flex-shrink: 0;
+    .fake-input {
+      height: 38px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      color: var(--text-faint);
+      font-size: 13px;
     }
+
+    .fake-textarea {
+      height: 80px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text-faint);
+      font-size: 13px;
+    }
+
+    .fake-select {
+      height: 38px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-faint);
+      font-size: 13px;
+    }
+
+    .fake-tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 4px 0;
+    }
+
+    .fake-tag {
+      background: var(--indigo-dim);
+      border: 1px solid var(--indigo-border);
+      color: var(--indigo);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .fake-auto {
+      font-size: 13px;
+      color: var(--orange);
+      font-style: italic;
+      opacity: 0.8;
+      background: var(--orange-dim);
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px dashed var(--orange-border);
+    }
+
 
     .pill-auto {
       background: var(--orange-dim);
@@ -490,15 +616,23 @@
     <div class="glow-orange" style="bottom:20%; left:-100px;"></div>
     <div class="container" style="position:relative; z-index:1;">
 
-      <div class="filter-bar" id="filter-bar">
-        <button class="filter-btn active" data-tag="all">All</button>
-        <button class="filter-btn" data-tag="research">Research</button>
-        <button class="filter-btn" data-tag="jobs">Jobs</button>
-        <button class="filter-btn" data-tag="design">Design</button>
-        <button class="filter-btn" data-tag="learning">Learning</button>
-        <button class="filter-btn" data-tag="business">Business</button>
-        <button class="filter-btn" data-tag="community">Community</button>
+      <div class="gallery-controls">
+        <div class="filter-bar" id="filter-bar">
+          <button class="filter-btn active" data-tag="all">All</button>
+          <button class="filter-btn" data-tag="research">Research</button>
+          <button class="filter-btn" data-tag="jobs">Jobs</button>
+          <button class="filter-btn" data-tag="design">Design</button>
+          <button class="filter-btn" data-tag="learning">Learning</button>
+          <button class="filter-btn" data-tag="business">Business</button>
+          <button class="filter-btn" data-tag="community">Community</button>
+        </div>
+
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" class="search-input" placeholder="Search templates...">
+        </div>
       </div>
+
       <div class="template-grid" id="template-grid"></div>
     </div>
   </section>
@@ -557,6 +691,7 @@
     // ─────────────────────────────────────────────────────────────
     let templatesRegistry = [];
     let activeTag = 'all';
+    let searchQuery = '';
 
     function initGallery() {
       // Use the bundled data from templates-data.js
@@ -569,25 +704,27 @@
       }
     }
 
+
     // ─────────────────────────────────────────────────────────────
     // FIELD TYPE → DISPLAY
     // ─────────────────────────────────────────────────────────────
     const TYPE_META = {
-      auto_title: { label: "Auto Title", pill: "pill-auto", icon: "🔤" },
-      auto_url: { label: "Auto URL", pill: "pill-auto", icon: "🔗" },
-      text: { label: "Text", pill: "pill-text", icon: "✏️" },
-      textarea: { label: "Long Text", pill: "pill-textarea", icon: "📝" },
-      tags: { label: "Tags", pill: "pill-tags", icon: "🏷️" },
-      select: { label: "Select", pill: "pill-select", icon: "☑️" },
-      bibtex: { label: "BibTeX", pill: "pill-bibtex", icon: "📚" },
-      date: { label: "Date", pill: "pill-date", icon: "📅" },
-      number: { label: "Number", pill: "pill-number", icon: "🔢" },
-      url: { label: "URL", pill: "pill-url", icon: "🌐" },
+      auto_title: { label: "Title", icon: "🔤" },
+      auto_url: { label: "URL", icon: "🔗" },
+      text: { label: "Text", icon: "✏️" },
+      textarea: { label: "Notes", icon: "📝" },
+      tags: { label: "Tags", icon: "🏷️" },
+      select: { label: "Select", icon: "☑️" },
+      bibtex: { label: "BibTeX", icon: "📚" },
+      date: { label: "Date", icon: "📅" },
+      number: { label: "Number", icon: "🔢" },
+      url: { label: "URL", icon: "🌐" },
     };
 
     function typeMeta(type) {
-      return TYPE_META[type] || { label: type, pill: "pill-default", icon: "⬜" };
+      return TYPE_META[type] || { label: type, icon: "⬜" };
     }
+
 
     // ─────────────────────────────────────────────────────────────
     // RENDER CARD
@@ -595,6 +732,14 @@
     function renderCard(t) {
       const isOfficial = t.authorType === 'official';
       
+      const previewHTML = (t.fieldPreview || []).map(type => {
+        const meta = typeMeta(type);
+        return `<div class="card-field-preview"><i>${meta.icon}</i> <span>${meta.label}</span></div>`;
+      }).join('');
+
+      const extra = t.fieldCount - (t.fieldPreview ? t.fieldPreview.length : 0);
+      const moreHTML = extra > 0 ? `<div class="card-fields-more">+ ${extra} more fields</div>` : '';
+
       return `
     <div class="template-card" data-id="${t.id}" data-category="${t.category}" data-authortype="${t.authorType}">
       <div class="card-thumb" style="background:linear-gradient(90deg, ${t.color}10, transparent);">
@@ -602,9 +747,9 @@
         <span class="card-name">${t.name}</span>
         <span class="card-badge ${isOfficial ? 'official' : ''}">${isOfficial ? 'Official' : 'Community'}</span>
       </div>
-      <div class="card-fields" style="padding: 24px; text-align: center; color: var(--text-dim); font-size: 13px;">
-         <div style="font-size: 24px; margin-bottom: 8px; opacity: 0.5;">📋</div>
-         ${t.fieldCount} fields in this template
+      <div class="card-fields">
+         ${previewHTML}
+         ${moreHTML}
       </div>
       <div class="card-footer">
         <span class="card-author">by ${t.author}</span>
@@ -617,23 +762,51 @@
   `;
     }
 
+
     // ─────────────────────────────────────────────────────────────
     // FILTER + RENDER
     // ─────────────────────────────────────────────────────────────
     function renderGrid() {
       const grid = document.getElementById('template-grid');
       let filtered = templatesRegistry;
+
+      // Filter by Category
       if (activeTag === 'community') {
-        filtered = templatesRegistry.filter(t => t.authorType === 'community');
+        filtered = filtered.filter(t => t.authorType === 'community');
       } else if (activeTag !== 'all') {
-        filtered = templatesRegistry.filter(t => t.category === activeTag);
+        filtered = filtered.filter(t => t.category === activeTag);
+      }
+
+      // Filter by Search Query
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter(t => 
+          t.name.toLowerCase().includes(q) || 
+          t.description.toLowerCase().includes(q) ||
+          t.category.toLowerCase().includes(q)
+        );
       }
       
       if (filtered.length === 0) {
-        grid.innerHTML = '<div class="empty-state">No templates in this category yet. <a href="submit.html" style="color:var(--indigo);">Submit one →</a></div>';
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1; padding: 60px 20px;">
+            <div style="font-size: 40px; margin-bottom: 16px; opacity: 0.5;">🔍</div>
+            <h3 style="margin-bottom: 8px;">No templates found</h3>
+            <p style="color: var(--text-faint);">Try adjusting your search or filter to find what you're looking for.</p>
+            <button class="btn-ghost" style="margin-top: 20px;" onclick="resetFilters()">Clear all filters</button>
+          </div>
+        `;
       } else {
         grid.innerHTML = filtered.map(renderCard).join('');
       }
+    }
+
+    function resetFilters() {
+      activeTag = 'all';
+      searchQuery = '';
+      document.getElementById('search-input').value = '';
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.tag === 'all'));
+      renderGrid();
     }
 
     document.getElementById('filter-bar').addEventListener('click', e => {
@@ -643,6 +816,12 @@
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.tag === activeTag));
       renderGrid();
     });
+
+    document.getElementById('search-input').addEventListener('input', e => {
+      searchQuery = e.target.value;
+      renderGrid();
+    });
+
 
     // ─────────────────────────────────────────────────────────────
     // MODAL — Bundle-based
@@ -663,25 +842,43 @@
       document.getElementById('modal-category').textContent = registryEntry.category.charAt(0).toUpperCase() + registryEntry.category.slice(1);
       document.getElementById('modal-field-count').textContent = `${t.fieldSchema.length} fields`;
 
-      document.getElementById('modal-fields').innerHTML = t.fieldSchema.map(f => {
-        const meta = typeMeta(f.type);
-        const subInfo = f.subFields ? `<div class="modal-field-hint">Sub-fields: ${f.subFields.join(', ')}</div>` : '';
-        const optInfo = f.options ? `<div class="modal-field-hint">Options: ${f.options.join(' · ')}</div>` : '';
-        const phInfo = f.placeholder ? `<div class="modal-field-hint">e.g. "${f.placeholder}"</div>` : '';
-        return `
-          <div class="modal-field">
-            <div class="modal-field-left">
-              <div class="modal-field-name">${meta.icon} ${f.label}</div>
-              ${subInfo}${optInfo}${phInfo}
-            </div>
-            <div class="modal-field-right">
-              ${f.required ? '<span class="req-dot">Required</span>' : ''}
-              <span class="field-type-pill ${meta.pill}">${meta.label}</span>
-            </div>
-          </div>
-        `;
-      }).join('');
+      document.getElementById('modal-fields').innerHTML = `
+        <div class="modal-form-preview">
+          ${t.fieldSchema.map(f => {
+            const meta = typeMeta(f.type);
+            let visual = '';
+
+            if (f.type === 'auto_title') {
+              visual = `<div class="fake-auto">🔤 (Auto-filled Page Title)</div>`;
+            } else if (f.type === 'auto_url') {
+              visual = `<div class="fake-auto">🔗 (Auto-filled URL)</div>`;
+            } else if (f.type === 'textarea') {
+              visual = `<div class="fake-textarea">${f.placeholder || '...'}</div>`;
+            } else if (f.type === 'select') {
+              visual = `<div class="fake-select"><span>Select Option...</span> <span>▼</span></div>`;
+            } else if (f.type === 'tags') {
+              visual = `<div class="fake-tags-container"><div class="fake-tag">tag1</div><div class="fake-tag">tag2</div></div>`;
+            } else if (f.type === 'date') {
+              visual = `<div class="fake-input">📅 Pick Date</div>`;
+            } else if (f.type === 'number') {
+              visual = `<div class="fake-input">🔢 123</div>`;
+            } else {
+              visual = `<div class="fake-input">${f.placeholder || '...'}</div>`;
+            }
+
+            return `
+              <div class="fake-field">
+                <div class="fake-label">
+                  ${f.label} ${f.required ? '<span class="req">*</span>' : ''}
+                </div>
+                ${visual}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
     }
+
 
     document.getElementById('modal-close').onclick = () => document.getElementById('modal-overlay').classList.remove('open');
     document.getElementById('modal-overlay').addEventListener('click', e => {
