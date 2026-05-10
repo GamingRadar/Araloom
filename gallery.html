@@ -13,7 +13,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="shared.css">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <script src="templates-data.js"></script>
+
 
 
   <style>
@@ -767,14 +767,22 @@
     let activeTag = 'all';
     let searchQuery = '';
 
-    function initGallery() {
-      // Use the bundled data from templates-data.js
-      if (window.ARALOOM_TEMPLATES) {
-        templatesRegistry = window.ARALOOM_TEMPLATES.registry;
+    async function initGallery() {
+      try {
+        const response = await fetch('templates.json');
+        if (!response.ok) throw new Error('Failed to load templates.json');
+        const data = await response.json();
+        templatesRegistry = data.templates;
         renderGrid();
-      } else {
-        console.error('Template data bundle not found.');
-        document.getElementById('template-grid').innerHTML = '<div class="empty-state">Error: Template data missing.</div>';
+      } catch (error) {
+        console.error('Error loading gallery:', error);
+        document.getElementById('template-grid').innerHTML = `
+          <div class="empty-state">
+            <div style="font-size: 40px; margin-bottom: 16px; opacity: 0.5;">⚠️</div>
+            <h3>Unable to load templates</h3>
+            <p>This page requires a local web server (like Live Server or npx serve) to load JSON data.</p>
+          </div>
+        `;
       }
     }
 
@@ -859,7 +867,8 @@
         filtered = filtered.filter(t => 
           t.name.toLowerCase().includes(q) || 
           t.description.toLowerCase().includes(q) ||
-          t.category.toLowerCase().includes(q)
+          t.category.toLowerCase().includes(q) ||
+          (t.keywords && t.keywords.some(k => k.toLowerCase().includes(q)))
         );
       }
       
@@ -904,84 +913,90 @@
     // ─────────────────────────────────────────────────────────────
     let activeTemplateId = null;
 
-    function openModal(id) {
-      const t = window.ARALOOM_TEMPLATES.details[id];
+    async function openModal(id) {
       const registryEntry = templatesRegistry.find(x => x.id === id);
-      if (!t || !registryEntry) return;
-      
-      activeTemplateId = id;
-      
-      document.getElementById('modal-overlay').classList.add('open');
-      document.getElementById('modal-title').textContent = `${t.icon} ${t.name}`;
-      document.getElementById('modal-desc').textContent = t.description;
-      document.getElementById('modal-author').textContent = t.author;
-      document.getElementById('modal-category').textContent = registryEntry.category.charAt(0).toUpperCase() + registryEntry.category.slice(1);
-      document.getElementById('modal-field-count').textContent = `${t.fieldSchema.length} fields`;
+      if (!registryEntry) return;
 
-      document.getElementById('modal-fields').innerHTML = `
-        <div class="modal-form-preview">
-          ${t.fieldSchema.map(f => {
-            const meta = typeMeta(f.type);
-            let visual = '';
+      try {
+        const response = await fetch(`templates/${registryEntry.file}`);
+        if (!response.ok) throw new Error('Failed to load template details');
+        const t = await response.json();
+        
+        activeTemplateId = id;
+        
+        document.getElementById('modal-overlay').classList.add('open');
+        document.getElementById('modal-title').textContent = `${registryEntry.icon} ${registryEntry.name}`;
+        document.getElementById('modal-desc').textContent = registryEntry.description;
+        document.getElementById('modal-author').textContent = registryEntry.author;
+        document.getElementById('modal-category').textContent = registryEntry.category.charAt(0).toUpperCase() + registryEntry.category.slice(1);
+        document.getElementById('modal-field-count').textContent = `${t.fieldSchema.length} fields`;
 
-            if (f.type === 'auto_title') {
-              visual = `<div class="fake-auto">🔤 (Auto-filled Page Title)</div>`;
-            } else if (f.type === 'auto_url') {
-              visual = `<div class="fake-auto">🔗 (Auto-filled URL)</div>`;
-            } else if (f.type === 'textarea') {
-              visual = `<div class="fake-textarea">${f.placeholder || 'Write your notes here...'}</div>`;
-            } else if (f.type === 'select') {
-              const options = f.options || ['Option 1', 'Option 2'];
-              visual = `
-                <div class="fake-select-wrap">
-                  <div class="fake-select">
-                    <span>${options[0]}</span>
-                    <span>▼</span>
+        document.getElementById('modal-fields').innerHTML = `
+          <div class="modal-form-preview">
+            ${t.fieldSchema.map(f => {
+              const meta = typeMeta(f.type);
+              let visual = '';
+
+              if (f.type === 'auto_title') {
+                visual = `<div class="fake-auto">🔤 (Auto-filled Page Title)</div>`;
+              } else if (f.type === 'auto_url') {
+                visual = `<div class="fake-auto">🔗 (Auto-filled URL)</div>`;
+              } else if (f.type === 'textarea') {
+                visual = `<div class="fake-textarea">${f.placeholder || 'Write your notes here...'}</div>`;
+              } else if (f.type === 'select') {
+                const options = f.options || ['Option 1', 'Option 2'];
+                visual = `
+                  <div class="fake-select-wrap">
+                    <div class="fake-select">
+                      <span>${options[0]}</span>
+                      <span>▼</span>
+                    </div>
+                    <div class="fake-options-list">
+                      ${options.map(opt => `<div class="fake-option">${opt}</div>`).join('')}
+                    </div>
                   </div>
-                  <div class="fake-options-list">
-                    ${options.map(opt => `<div class="fake-option">${opt}</div>`).join('')}
+                `;
+              } else if (f.type === 'tags') {
+                visual = `<div class="fake-tags-container"><div class="fake-tag">tag1</div><div class="fake-tag">tag2</div></div>`;
+              } else if (f.type === 'date') {
+                visual = `<div class="fake-input">📅 Select Date...</div>`;
+              } else if (f.type === 'number') {
+                visual = `<div class="fake-input">🔢 Enter number...</div>`;
+              } else if (f.type === 'checkbox') {
+                visual = `
+                  <div class="fake-checkbox-wrap">
+                    <div class="fake-checkbox">✓</div>
+                    <span style="font-size:12px; color:var(--text-dim);">Checked by default</span>
                   </div>
-                </div>
-              `;
-            } else if (f.type === 'tags') {
-              visual = `<div class="fake-tags-container"><div class="fake-tag">tag1</div><div class="fake-tag">tag2</div></div>`;
-            } else if (f.type === 'date') {
-              visual = `<div class="fake-input">📅 Select Date...</div>`;
-            } else if (f.type === 'number') {
-              visual = `<div class="fake-input">🔢 Enter number...</div>`;
-            } else if (f.type === 'checkbox') {
-              visual = `
-                <div class="fake-checkbox-wrap">
-                  <div class="fake-checkbox">✓</div>
-                  <span style="font-size:12px; color:var(--text-dim);">Checked by default</span>
-                </div>
-              `;
-            } else if (f.type === 'bibtex') {
-              visual = `
-                <div class="fake-bibtex-box">
-                  @article{araloom2026,<br>
-                  &nbsp;&nbsp;title={Advanced Template System},<br>
-                  &nbsp;&nbsp;author={Araloom Team},<br>
-                  &nbsp;&nbsp;year={2026}<br>
-                  }
-                </div>
-              `;
-            } else {
-              visual = `<div class="fake-input">${f.placeholder || 'Type here...'}</div>`;
-            }
+                `;
+              } else if (f.type === 'bibtex') {
+                visual = `
+                  <div class="fake-bibtex-box">
+                    @article{araloom2026,<br>
+                    &nbsp;&nbsp;title={Advanced Template System},<br>
+                    &nbsp;&nbsp;author={Araloom Team},<br>
+                    &nbsp;&nbsp;year={2026}<br>
+                    }
+                  </div>
+                `;
+              } else {
+                visual = `<div class="fake-input">${f.placeholder || 'Type here...'}</div>`;
+              }
 
-            return `
-              <div class="fake-field">
-                <div class="fake-label">
-                  ${f.label} ${f.required ? '<span class="req">*</span>' : ''}
+              return `
+                <div class="fake-field">
+                  <div class="fake-label">
+                    ${f.label} ${f.required ? '<span class="req">*</span>' : ''}
+                  </div>
+                  ${visual}
                 </div>
-                ${visual}
-              </div>
-            `;
-          }).join('')}
-        </div>
-      `;
-
+              `;
+            }).join('')}
+          </div>
+        `;
+      } catch (error) {
+        console.error('Error opening modal:', error);
+      }
     }
 
 
@@ -993,23 +1008,30 @@
     // ─────────────────────────────────────────────────────────────
     // DOWNLOAD — Local Download
     // ─────────────────────────────────────────────────────────────
-    function downloadTemplate(id) {
-      const t = window.ARALOOM_TEMPLATES.details[id];
+    async function downloadTemplate(id) {
       const registryEntry = templatesRegistry.find(x => x.id === id);
-      if (!t || !registryEntry) return;
+      if (!registryEntry) return;
 
-      const json = JSON.stringify({
-        ...t,
-        createdAt: t.createdAt || new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      }, null, 2);
+      try {
+        const response = await fetch(`templates/${registryEntry.file}`);
+        if (!response.ok) throw new Error('Failed to load template for download');
+        const t = await response.json();
 
-      const blob = new Blob([json], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `araloom-${registryEntry.file}`;
-      a.click();
-      URL.revokeObjectURL(a.href);
+        const json = JSON.stringify({
+          ...t,
+          createdAt: t.createdAt || new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }, null, 2);
+
+        const blob = new Blob([json], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `araloom-${registryEntry.file}`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+      } catch (error) {
+        console.error('Error downloading template:', error);
+      }
     }
 
     document.getElementById('modal-dl-btn').onclick = () => {

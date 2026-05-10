@@ -2,14 +2,49 @@
   "id": "tpl_design_001",
   "name": "Design Inspiration",
   "description": "Collect UI references, color palettes, and typography from any website. Build your visual moodboard.",
-  "author": "Araloom Team",
   "icon": "🎨",
   "color": "#e85d3a",
   "fieldSchema": [
-    { "id": "f1", "label": "Page Title", "type": "auto_title", "required": true },
-    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
-    { "id": "f3", "label": "What I Like", "type": "textarea", "required": false, "placeholder": "Layout, colors, type choices..." },
-    { "id": "f4", "label": "Style Type", "type": "select", "required": false, "options": ["Minimal", "Brutalist", "Glassmorphism", "Gradient", "Dark", "Light", "Editorial"] },
-    { "id": "f5", "label": "Tags", "type": "tags", "required": false, "placeholder": "typography, dark-mode, cards..." }
+    {
+      "id": "f1",
+      "label": "Page Title",
+      "type": "auto_title",
+      "required": true
+    },
+    {
+      "id": "f2",
+      "label": "URL",
+      "type": "auto_url",
+      "required": true
+    },
+    {
+      "id": "f3",
+      "label": "What I Like",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Layout, colors, type choices..."
+    },
+    {
+      "id": "f4",
+      "label": "Style Type",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Minimal",
+        "Brutalist",
+        "Glassmorphism",
+        "Gradient",
+        "Dark",
+        "Light",
+        "Editorial"
+      ]
+    },
+    {
+      "id": "f5",
+      "label": "Tags",
+      "type": "tags",
+      "required": false,
+      "placeholder": "typography, dark-mode, cards..."
+    }
   ]
 }

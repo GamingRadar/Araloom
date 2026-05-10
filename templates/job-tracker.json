@@ -2,17 +2,64 @@
   "id": "tpl_jobs_001",
   "name": "Job Tracker",
   "description": "Track applications from LinkedIn, Indeed, or any job board. Status, salary, deadline in one view.",
-  "author": "Araloom Team",
   "icon": "💼",
   "color": "#6366f1",
   "fieldSchema": [
-    { "id": "f1", "label": "Job Title", "type": "auto_title", "required": true },
-    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
-    { "id": "f3", "label": "Company", "type": "text", "required": true },
-    { "id": "f4", "label": "Salary", "type": "text", "required": false },
-    { "id": "f5", "label": "Status", "type": "select", "required": false, "options": ["Saved", "Applied", "Interviewing", "Offer", "Rejected"] },
-    { "id": "f6", "label": "Deadline", "type": "date", "required": false },
-    { "id": "f7", "label": "Notes", "type": "textarea", "required": false, "placeholder": "Impressions, contacts, next steps..." },
-    { "id": "f8", "label": "Tags", "type": "tags", "required": false }
+    {
+      "id": "f1",
+      "label": "Job Title",
+      "type": "auto_title",
+      "required": true
+    },
+    {
+      "id": "f2",
+      "label": "URL",
+      "type": "auto_url",
+      "required": true
+    },
+    {
+      "id": "f3",
+      "label": "Company",
+      "type": "text",
+      "required": true
+    },
+    {
+      "id": "f4",
+      "label": "Salary",
+      "type": "text",
+      "required": false
+    },
+    {
+      "id": "f5",
+      "label": "Status",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Saved",
+        "Applied",
+        "Interviewing",
+        "Offer",
+        "Rejected"
+      ]
+    },
+    {
+      "id": "f6",
+      "label": "Deadline",
+      "type": "date",
+      "required": false
+    },
+    {
+      "id": "f7",
+      "label": "Notes",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "Impressions, contacts, next steps..."
+    },
+    {
+      "id": "f8",
+      "label": "Tags",
+      "type": "tags",
+      "required": false
+    }
   ]
 }

@@ -2,15 +2,58 @@
   "id": "tpl_content_001",
   "name": "Content Inspiration",
   "description": "Save ideas, hooks, and references for posts, videos, newsletters, and threads.",
-  "author": "Content Creators",
   "icon": "📅",
   "color": "#6366f1",
   "fieldSchema": [
-    { "id": "f1", "label": "Source Title", "type": "auto_title", "required": true },
-    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
-    { "id": "f3", "label": "Hook Idea", "type": "textarea", "required": false, "placeholder": "How could this become a post?" },
-    { "id": "f4", "label": "Format", "type": "select", "required": false, "options": ["Thread", "Newsletter", "Video", "Blog", "Short"] },
-    { "id": "f5", "label": "Status", "type": "select", "required": false, "options": ["Idea", "Draft", "Scheduled", "Published"] },
-    { "id": "f6", "label": "Tags", "type": "tags", "required": false }
+    {
+      "id": "f1",
+      "label": "Source Title",
+      "type": "auto_title",
+      "required": true
+    },
+    {
+      "id": "f2",
+      "label": "URL",
+      "type": "auto_url",
+      "required": true
+    },
+    {
+      "id": "f3",
+      "label": "Hook Idea",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "How could this become a post?"
+    },
+    {
+      "id": "f4",
+      "label": "Format",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Thread",
+        "Newsletter",
+        "Video",
+        "Blog",
+        "Short"
+      ]
+    },
+    {
+      "id": "f5",
+      "label": "Status",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Idea",
+        "Draft",
+        "Scheduled",
+        "Published"
+      ]
+    },
+    {
+      "id": "f6",
+      "label": "Tags",
+      "type": "tags",
+      "required": false
+    }
   ]
 }

@@ -2,15 +2,51 @@
   "id": "tpl_learning_001",
   "name": "Learning Path",
   "description": "Structure online courses and tutorials. Track what you've learned and what to do next.",
-  "author": "Araloom Team",
   "icon": "🎓",
   "color": "#6366f1",
   "fieldSchema": [
-    { "id": "f1", "label": "Resource Title", "type": "auto_title", "required": true },
-    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
-    { "id": "f3", "label": "Platform", "type": "text", "required": false },
-    { "id": "f4", "label": "Status", "type": "select", "required": false, "options": ["Not Started", "In Progress", "Completed", "Revisit"] },
-    { "id": "f5", "label": "Key Takeaways", "type": "textarea", "required": false },
-    { "id": "f6", "label": "Tags", "type": "tags", "required": false, "placeholder": "python, ml, beginner..." }
+    {
+      "id": "f1",
+      "label": "Resource Title",
+      "type": "auto_title",
+      "required": true
+    },
+    {
+      "id": "f2",
+      "label": "URL",
+      "type": "auto_url",
+      "required": true
+    },
+    {
+      "id": "f3",
+      "label": "Platform",
+      "type": "text",
+      "required": false
+    },
+    {
+      "id": "f4",
+      "label": "Status",
+      "type": "select",
+      "required": false,
+      "options": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Revisit"
+      ]
+    },
+    {
+      "id": "f5",
+      "label": "Key Takeaways",
+      "type": "textarea",
+      "required": false
+    },
+    {
+      "id": "f6",
+      "label": "Tags",
+      "type": "tags",
+      "required": false,
+      "placeholder": "python, ml, beginner..."
+    }
   ]
 }

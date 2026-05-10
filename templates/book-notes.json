@@ -2,15 +2,45 @@
   "id": "tpl_books_001",
   "name": "Book & Article Notes",
   "description": "Capture quotes, key ideas, and action items from anything you read online.",
-  "author": "Reader's Circle",
   "icon": "📖",
   "color": "#6366f1",
   "fieldSchema": [
-    { "id": "f1", "label": "Title", "type": "auto_title", "required": true },
-    { "id": "f2", "label": "URL", "type": "auto_url", "required": true },
-    { "id": "f3", "label": "Author", "type": "text", "required": false },
-    { "id": "f4", "label": "Key Quote", "type": "textarea", "required": false, "placeholder": "The most important line..." },
-    { "id": "f5", "label": "My Takeaway", "type": "textarea", "required": false },
-    { "id": "f6", "label": "Tags", "type": "tags", "required": false }
+    {
+      "id": "f1",
+      "label": "Title",
+      "type": "auto_title",
+      "required": true
+    },
+    {
+      "id": "f2",
+      "label": "URL",
+      "type": "auto_url",
+      "required": true
+    },
+    {
+      "id": "f3",
+      "label": "Author",
+      "type": "text",
+      "required": false
+    },
+    {
+      "id": "f4",
+      "label": "Key Quote",
+      "type": "textarea",
+      "required": false,
+      "placeholder": "The most important line..."
+    },
+    {
+      "id": "f5",
+      "label": "My Takeaway",
+      "type": "textarea",
+      "required": false
+    },
+    {
+      "id": "f6",
+      "label": "Tags",
+      "type": "tags",
+      "required": false
+    }
   ]
 }

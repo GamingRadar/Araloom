@@ -10,7 +10,9 @@
       "file": "research-papers.json",
       "icon": "📚",
       "color": "#6366f1",
-      "fieldCount": 5
+      "fieldCount": 5,
+      "fieldPreview": ["auto_title", "auto_url", "bibtex"],
+      "keywords": ["research", "academic", "papers", "bibtex", "study"]
     },
     {
       "id": "tpl_jobs_001",
@@ -22,7 +24,9 @@
       "file": "job-tracker.json",
       "icon": "💼",
       "color": "#6366f1",
-      "fieldCount": 8
+      "fieldCount": 8,
+      "fieldPreview": ["auto_title", "auto_url", "select"],
+      "keywords": ["jobs", "career", "hiring", "applications", "interviews"]
     },
     {
       "id": "tpl_design_001",
@@ -34,7 +38,9 @@
       "file": "design-inspiration.json",
       "icon": "🎨",
       "color": "#e85d3a",
-      "fieldCount": 5
+      "fieldCount": 5,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"],
+      "keywords": ["design", "ui", "ux", "inspiration", "moodboard", "colors"]
     },
     {
       "id": "tpl_learning_001",
@@ -46,7 +52,9 @@
       "file": "learning-path.json",
       "icon": "🎓",
       "color": "#6366f1",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "select"],
+      "keywords": ["learning", "courses", "education", "study", "path"]
     },
     {
       "id": "tpl_biz_001",
@@ -58,7 +66,9 @@
       "file": "deal-flow.json",
       "icon": "📈",
       "color": "#e85d3a",
-      "fieldCount": 7
+      "fieldCount": 7,
+      "fieldPreview": ["auto_title", "auto_url", "select"],
+      "keywords": ["business", "vc", "startups", "investing", "dealflow"]
     },
     {
       "id": "tpl_books_001",
@@ -70,7 +80,9 @@
       "file": "book-notes.json",
       "icon": "📖",
       "color": "#6366f1",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"],
+      "keywords": ["books", "reading", "notes", "articles", "learning"]
     },
     {
       "id": "tpl_ux_001",
@@ -82,7 +94,9 @@
       "file": "ux-research.json",
       "icon": "🔬",
       "color": "#e85d3a",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"],
+      "keywords": ["ux", "research", "usability", "design", "competitors"]
     },
     {
       "id": "tpl_startup_001",
@@ -94,7 +108,9 @@
       "file": "startup-research.json",
       "icon": "🚀",
       "color": "#e85d3a",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"],
+      "keywords": ["startup", "research", "market", "competitors", "launch"]
     },
     {
       "id": "tpl_content_001",
@@ -106,7 +122,9 @@
       "file": "content-calendar.json",
       "icon": "📅",
       "color": "#6366f1",
-      "fieldCount": 6
+      "fieldCount": 6,
+      "fieldPreview": ["auto_title", "auto_url", "textarea"],
+      "keywords": ["content", "marketing", "socialmedia", "ideas", "calendar"]
     }
   ]
 }
