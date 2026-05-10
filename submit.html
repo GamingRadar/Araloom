@@ -416,6 +416,33 @@
       display: block;
     }
 
+    .hidden {
+      display: none;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: -12px;
+      margin-bottom: 18px;
+    }
+
+    .checkbox-row input {
+      cursor: pointer;
+    }
+
+    .checkbox-row label {
+      font-size: 12px;
+      color: var(--text-dim);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .category-other-wrap {
+      margin-top: 10px;
+    }
+
     @media (max-width: 860px) {
       .submit-grid {
         grid-template-columns: 1fr;
@@ -581,28 +608,51 @@
               <input type="text" name="_honey" style="display:none">
 
               <div class="form-field">
-                <label class="form-label" for="author-name">Your Name / Handle</label>
-                <input class="form-input" type="text" id="author-name" name="name" placeholder="e.g. @yourname"
+                <label class="form-label" for="real-name">Your Full Name</label>
+                <input class="form-input" type="text" id="real-name" name="real_name" placeholder="For our records"
                   required>
+              </div>
+
+              <div class="checkbox-row">
+                <input type="checkbox" id="sync-names" checked>
+                <label for="sync-names">Use my name as Author Display Name</label>
+              </div>
+
+              <div class="form-field hidden" id="author-field">
+                <label class="form-label" for="author-name">Author Display Name</label>
+                <input class="form-input" type="text" id="author-name" name="author_display_name"
+                  placeholder="How it appears in gallery">
               </div>
 
               <div class="form-field">
                 <label class="form-label" for="author-email">Your Email</label>
                 <input class="form-input" type="email" id="author-email" name="email"
-                  placeholder="so we can notify you when it's live" required>
+                  placeholder="To notify you when it's live" required>
               </div>
 
               <div class="form-field">
                 <label class="form-label" for="template-category">Category</label>
-                <select class="form-select" id="template-category" name="category" required>
+                <select class="form-select" id="template-category" name="category" required
+                  onchange="toggleOtherCategory(this)">
                   <option value="" disabled selected>Select a category…</option>
                   <option value="research">Research</option>
                   <option value="jobs">Jobs</option>
                   <option value="design">Design</option>
                   <option value="learning">Learning</option>
                   <option value="business">Business</option>
-                  <option value="other">Other</option>
+                  <option value="other">Other...</option>
                 </select>
+                <div id="other-category-wrap" class="category-other-wrap hidden">
+                  <input class="form-input" type="text" id="other-category" name="other_category_name"
+                    placeholder="Type custom category...">
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" for="user-message">Message to the team (Optional)</label>
+                <textarea class="form-input" id="user-message" name="message" rows="2"
+                  style="font-size: 13px; height: 60px; font-family: inherit;"
+                  placeholder="Anything we should know?"></textarea>
               </div>
 
               <div class="form-field">
@@ -680,8 +730,44 @@
     const submitBtn = document.getElementById('submit-btn');
     const successMsg = document.getElementById('success-msg');
 
+    const realNameInput = document.getElementById('real-name');
+    const authorNameInput = document.getElementById('author-name');
+    const syncCheckbox = document.getElementById('sync-names');
+    const authorField = document.getElementById('author-field');
+
     // YOUR EMAIL - Change this to your preferred submission email
     const SUBMISSION_EMAIL = "devashishstudybristol@gmail.com";
+
+    // --- Author Name Sync Logic ---
+    syncCheckbox.addEventListener('change', () => {
+      if (syncCheckbox.checked) {
+        authorField.classList.add('hidden');
+        authorNameInput.value = realNameInput.value;
+        authorNameInput.required = false;
+      } else {
+        authorField.classList.remove('hidden');
+        authorNameInput.required = true;
+      }
+    });
+
+    realNameInput.addEventListener('input', () => {
+      if (syncCheckbox.checked) {
+        authorNameInput.value = realNameInput.value;
+      }
+    });
+
+    // --- "Other" Category Logic ---
+    function toggleOtherCategory(select) {
+      const otherWrap = document.getElementById('other-category-wrap');
+      const otherInput = document.getElementById('other-category');
+      if (select.value === 'other') {
+        otherWrap.classList.remove('hidden');
+        otherInput.required = true;
+      } else {
+        otherWrap.classList.add('hidden');
+        otherInput.required = false;
+      }
+    }
 
     function validateJSON() {
       const val = jsonArea.value.trim();
@@ -699,7 +785,7 @@
         if (!parsed.id || !parsed.fieldSchema) {
           throw new Error("Missing Araloom schema fields");
         }
-        
+
         const fieldCount = parsed.fieldSchema.length;
         status.textContent = `✅ Ready (${fieldCount} fields)`;
         status.className = 'json-status valid';
@@ -735,10 +821,10 @@
 
     form.onsubmit = async (e) => {
       e.preventDefault();
-      
+
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
-      
+
       // Update UI to "Submitting"
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>⌛</span> Submitting...';
@@ -746,7 +832,7 @@
       try {
         const response = await fetch(`https://formsubmit.co/ajax/${SUBMISSION_EMAIL}`, {
           method: "POST",
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
